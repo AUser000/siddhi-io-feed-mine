@@ -1,5 +1,7 @@
 package org.wso2.extension.siddhi.io.feed.source;
 
+import org.apache.log4j.Logger;
+import org.wso2.extension.siddhi.io.feed.utils.BasicAuthProperties;
 import org.wso2.extension.siddhi.io.feed.utils.Constants;
 import org.wso2.siddhi.annotation.Example;
 import org.wso2.siddhi.annotation.Extension;
@@ -13,10 +15,14 @@ import org.wso2.siddhi.core.util.config.ConfigReader;
 import org.wso2.siddhi.core.util.transport.OptionHolder;
 import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
-import java.io.Console;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This is a sample class-level comment, explaining what the extension class does.
@@ -77,11 +83,21 @@ import java.util.Map;
                         description = "address of the feed end point",
                         type = DataType.STRING),
                 @Parameter(name = Constants.FEED_TYPE,
-                        description = "Atom, or Rss",
+                        description = " Rss or Atom",
                         type = DataType.STRING),
                 @Parameter(name = Constants.REQUEST_INTERVAL,
                         description = "request interval in minutes",
-                        type = DataType.INT)
+                        type = DataType.INT),
+                @Parameter(name = Constants.USERNAME,
+                        description = "User name of the basic auth",
+                        optional = true,
+                        defaultValue = Constants.CREDENTIALS,
+                        type = DataType.INT),
+                @Parameter(name = Constants.PASSWORD,
+                        description = "Password of the basic auth",
+                        optional = true,
+                        defaultValue = Constants.CREDENTIALS,
+                        type = DataType.INT),
         },
         examples = {
                 @Example(
@@ -93,8 +109,17 @@ import java.util.Map;
 
 // for more information refer https://wso2.github.io/siddhi/documentation/siddhi-4.0/#sources
 public class FeedSource extends Source {
+    Logger logger = Logger.getLogger(FeedSource.class);
+    OptionHolder optionHolder;
     private URL url;
     private String type;
+    private int requestInterval;
+    private FeedListener listener;
+    private SiddhiAppContext siddhiAppContext;
+    private ScheduledFuture future;
+    private SourceEventListener sourceEventListener;
+    private ScheduledExecutorService scheduledExecutorService;
+    private BasicAuthProperties basicAuthProperties;
     /**
      * The initialization method for {@link Source}, will be called before other methods. It used to validate
      * all configurations and to get initial values.
@@ -110,36 +135,62 @@ public class FeedSource extends Source {
                      String[] requestedTransportPropertyNames, ConfigReader configReader,
                      SiddhiAppContext siddhiAppContext) {
 
+        this.optionHolder = optionHolder;
+        this.sourceEventListener = sourceEventListener;
         try {
-            url = new URL(optionHolder.validateAndGetStaticValue(Constants.URL));
+            url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));
         } catch (MalformedURLException e) {
             throw new SiddhiAppValidationException("url error");
         }
-
-
+        basicAuthProperties = validateCredentials();
+        type = validateType();
+        requestInterval = validateRequestInterval();
+        scheduledExecutorService = siddhiAppContext.getScheduledExecutorService();
+        logger.info("init triggerd"); //ToDo
     }
 
-    /**
-     * Returns the list of classes which this source can output.
-     *
-     * @return Array of classes that will be output by the source.
-     * Null or empty array if it can produce any type of class.
-     */
+    private String validateType() {
+        String type = optionHolder.validateAndGetStaticValue(Constants.FEED_TYPE);
+        type = type.toLowerCase(Locale.ENGLISH);
+        if(type.equals(Constants.RSS)) {
+            return type;
+        } else if (type.equals(Constants.ATOM)) {
+            return type;
+        } else {
+            throw new SiddhiAppValidationException("type error");
+        }
+    }
+
+    private int validateRequestInterval() {
+        int requestInterval = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.REQUEST_INTERVAL));
+        return requestInterval;
+    }
+
+    private BasicAuthProperties validateCredentials() {
+        BasicAuthProperties properties = new BasicAuthProperties();
+        if(!optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS).equals(Constants.CREDENTIALS) ||
+                !optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS).equals(Constants.CREDENTIALS)) {
+            properties.setEnable(true);
+            properties.setUserName(optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS));
+            properties.setUserPass(optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS));
+        }
+        return properties;
+    }
+
     @Override
     public Class[] getOutputEventClasses() {
-        return new Class[0];
+        return new Class[] {Map.class};
     }
 
-    /**
-     * Initially Called to connect to the end point for start retrieving the messages asynchronously .
-     *
-     * @param connectionCallback Callback to pass the ConnectionUnavailableException in case of connection failure after
-     *                           initial successful connection. (can be used when events are receiving asynchronously)
-     * @throws ConnectionUnavailableException if it cannot connect to the source backend immediately.
-     */
     @Override
     public void connect(ConnectionCallback connectionCallback) throws ConnectionUnavailableException {
-
+        logger.info(" connect method trig."); // TODO
+        try {
+            listener = new FeedListener(sourceEventListener, url, type, basicAuthProperties);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        future = scheduledExecutorService.scheduleAtFixedRate(listener, 0, requestInterval, TimeUnit.MINUTES);
     }
 
     /**
@@ -155,7 +206,8 @@ public class FeedSource extends Source {
      */
     @Override
     public void destroy() {
-
+        future.cancel(true);
+        scheduledExecutorService.shutdown();
     }
 
     /**
@@ -163,7 +215,7 @@ public class FeedSource extends Source {
      */
     @Override
     public void pause() {
-
+        listener.pause();
     }
 
     /**
@@ -171,7 +223,7 @@ public class FeedSource extends Source {
      */
     @Override
     public void resume() {
-
+        listener.resume();
     }
 
     /**

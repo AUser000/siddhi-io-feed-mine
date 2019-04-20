@@ -1,8 +1,20 @@
 package org.wso2.extension.siddhi.io.feed.sink;
 
+import org.apache.abdera.Abdera;
+import org.apache.abdera.factory.Factory;
+import org.apache.abdera.model.Entry;
+import org.apache.abdera.protocol.client.AbderaClient;
+import org.apache.abdera.protocol.client.ClientResponse;
+import org.apache.abdera.protocol.client.RequestOptions;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.log4j.Logger;
+import org.wso2.extension.siddhi.io.feed.utils.BasicAuthProperties;
+import org.wso2.extension.siddhi.io.feed.utils.Constants;
+import org.wso2.extension.siddhi.io.feed.utils.EntryUtils;
 import org.wso2.siddhi.annotation.Example;
 import org.wso2.siddhi.annotation.Extension;
+import org.wso2.siddhi.annotation.Parameter;
+import org.wso2.siddhi.annotation.util.DataType;
 import org.wso2.siddhi.core.config.SiddhiAppContext;
 import org.wso2.siddhi.core.exception.ConnectionUnavailableException;
 import org.wso2.siddhi.core.stream.output.sink.Sink;
@@ -10,7 +22,13 @@ import org.wso2.siddhi.core.util.config.ConfigReader;
 import org.wso2.siddhi.core.util.transport.DynamicOptions;
 import org.wso2.siddhi.core.util.transport.OptionHolder;
 import org.wso2.siddhi.query.api.definition.StreamDefinition;
+import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -45,76 +63,105 @@ import java.util.Map;
         namespace = "sink",
         description = " ",
         parameters = {
-                /*@Parameter(name = " ",
-                        description = " " ,
-                        dynamic = false/true,
-                        optional = true/false, defaultValue = " ",
-                        type = {DataType.INT, DataType.BOOL, DataType.STRING, DataType.DOUBLE,etc }),
-                        type = {DataType.INT, DataType.BOOL, DataType.STRING, DataType.DOUBLE, }),*/
+                @Parameter(name = Constants.URL,
+                        description = "address of the feed end point",
+                        type = DataType.STRING),
+                @Parameter(name = Constants.FEED_CREATE,
+                        description = "atom fn of the request",
+                        type = DataType.STRING),
+                @Parameter(name = Constants.USERNAME,
+                        description = "User name of the basic auth",
+                        optional = true,
+                        defaultValue = Constants.CREDENTIALS,
+                        type = DataType.INT),
+                @Parameter(name = Constants.PASSWORD,
+                        description = "Password of the basic auth",
+                        optional = true,
+                        defaultValue = Constants.CREDENTIALS,
+                        type = DataType.INT),
         },
         examples = {
                 @Example(
                         syntax = " ",
-                        description = " "
+                        description = " support atom only"
                 )
         }
 )
 
-// for more information refer https://wso2.github.io/siddhi/documentation/siddhi-4.0/#sinks
-
 public class FeedSink extends Sink {
     private static final Logger log = Logger.getLogger(FeedSink.class);
+    private OptionHolder optionHolder;
+    private URL url;
+    private BasicAuthProperties authProperties;
+    private Abdera abdera;
+    private Factory factory;
+    private AbderaClient abderaClient;
+    private RequestOptions opts;
 
-    /**
-     * Returns the list of classes which this sink can consume.
-     * Based on the type of the sink, it may be limited to being able to publish specific type of classes.
-     * For example, a sink of type file can only write objects of type String .
-     * @return array of supported classes , if extension can support of any types of classes
-     * then return empty array .
-     */
     @Override
     public Class[] getSupportedInputEventClasses() {
-            return new Class[0];
+            return new Class[]{Map.class};
     }
 
-    /**
-     * Returns a list of supported dynamic options (that means for each event value of the option can change) by
-     * the transport
-     *
-     * @return the list of supported dynamic option keys
-     */
     @Override
     public String[] getSupportedDynamicOptions() {
             return new String[0];
     }
 
-    /**
-     * The initialization method for {@link Sink}, will be called before other methods. It used to validate
-     * all configurations and to get initial values.
-     * @param streamDefinition  containing stream definition bind to the {@link Sink}
-     * @param optionHolder            Option holder containing static and dynamic configuration related
-     *                                to the {@link Sink}
-     * @param configReader        to read the sink related system configuration.
-     * @param siddhiAppContext        the context of the {@link org.wso2.siddhi.query.api.SiddhiApp} used to
-     *                                get siddhi related utility functions.
-     */
     @Override
     protected void init(StreamDefinition streamDefinition, OptionHolder optionHolder, ConfigReader configReader,
             SiddhiAppContext siddhiAppContext) {
-
+        this.optionHolder = optionHolder;
+        try {
+            url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));
+        } catch (MalformedURLException e) {
+            throw new SiddhiAppValidationException("url error");
+        }
+        authProperties = validateCredentials();
+        abdera = new Abdera();
+        factory = abdera.getFactory();
+        abderaClient = new AbderaClient(abdera);
+        opts = new RequestOptions();
     }
 
-    /**
-     * This method will be called when events need to be published via this sink
-     * @param payload        payload of the event based on the supported event class exported by the extensions
-     * @param dynamicOptions holds the dynamic options of this sink and Use this object to obtain dynamic options.
-     * @throws ConnectionUnavailableException if end point is unavailable the ConnectionUnavailableException thrown
-     *                                        such that the  system will take care retrying for connection
-     */
+    private BasicAuthProperties validateCredentials() {
+        BasicAuthProperties properties = new BasicAuthProperties();
+        if(!optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS).equals(Constants.CREDENTIALS) ||
+                !optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS).equals(Constants.CREDENTIALS)) {
+            properties.setEnable(true);
+            properties.setUserName(optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS));
+            properties.setUserPass(optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS));
+        }
+        return properties;
+    }
+
+
     @Override
     public void publish(Object payload, DynamicOptions dynamicOptions) throws ConnectionUnavailableException {
+        HashMap map = (HashMap) payload;
+        if(authProperties.isEnable()) {
+            abderaClient.registerTrustManager();
+            try {
+                abderaClient.addCredentials(String.valueOf(url),
+                        "realm",
+                        "basic",
+                        new UsernamePasswordCredentials(authProperties.getUserName(), authProperties.getUserPass()));
+            } catch (URISyntaxException e) {
+                // TODO :- check again
+                log.info(" eroor on : " , e);
+            }
+        }
+
+
+        opts.setContentType("application/atom+xml;type=entry");
+        Entry entry = EntryUtils.createEntry(map, factory);
+        ClientResponse resp = abderaClient.post(url.toString(), entry, opts);
+        if(resp.getStatus() != Constants.HTTP_CREATED) {
+            throw new RuntimeException();
+        }
 
     }
+
 
     /**
      * This method will be called before the processing method.
@@ -142,7 +189,7 @@ public class FeedSink extends Sink {
      */
     @Override
     public void destroy() {
-
+        abderaClient.clearCredentials();
     }
 
     /**

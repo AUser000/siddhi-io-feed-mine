@@ -18,6 +18,22 @@
     <name>Siddhi I/O feed</name>
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.apache.abdera/abdera-client -->
+            <dependency>
+                <groupId>org.apache.abdera</groupId>
+                <artifactId>abdera-client</artifactId>
+                <version>1.1.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.abdera</groupId>
+                <artifactId>abdera-core</artifactId>
+                <version>1.1.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.abdera</groupId>
+                <artifactId>abdera-parser</artifactId>
+                <version>1.1.3</version>
+            </dependency>
             <dependency>
                 <groupId>org.wso2.siddhi</groupId>
                 <artifactId>siddhi-core</artifactId>
@@ -68,9 +84,22 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.wso2.extension.siddhi.map.text</groupId>
+                <artifactId>siddhi-map-text</artifactId>
+                <version>${siddhi.map.text.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.extension.siddhi.map.json</groupId>
                 <artifactId>siddhi-map-json</artifactId>
                 <version>${siddhi.map.json.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.wso2.extension.siddhi.map.keyvalue/siddhi-map-keyvalue -->
+            <dependency>
+                <groupId>org.wso2.extension.siddhi.map.keyvalue</groupId>
+                <artifactId>siddhi-map-keyvalue</artifactId>
+                <version>1.1.1</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -79,6 +108,36 @@
                 <version>6.11</version>
                 <scope>test</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.ws.commons.axiom/axiom-api -->
+            <dependency>
+                <groupId>org.apache.ws.commons.axiom</groupId>
+                <artifactId>axiom-api</artifactId>
+                <version>1.2.14</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.ws.commons.axiom</groupId>
+                <artifactId>axiom-impl</artifactId>
+                <version>1.2.14</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.mortbay.jetty/jetty -->
+            <dependency>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty</artifactId>
+                <version>6.1.26</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- abdera server-->
+            <dependency>
+                <groupId>org.apache.abdera</groupId>
+                <artifactId>abdera-server</artifactId>
+                <version>1.1.3</version>
+                <scope>test</scope>
+            </dependency>
+
+
+
+
         </dependencies>
     </dependencyManagement>
     <build>
@@ -111,7 +170,8 @@
         </plugins>
     </build>
     <properties>
-        <siddhi.version>4.1.0</siddhi.version>
+        <siddhi.version>4.4.9</siddhi.version>
+        <siddhi.map.text.version>1.1.0</siddhi.map.text.version>
         <log4j.version>1.2.17.wso2v1</log4j.version>
         <carbon.transport.version>4.4.15</carbon.transport.version>
         <siddhi.map.json.version>4.0.15</siddhi.map.json.version>
