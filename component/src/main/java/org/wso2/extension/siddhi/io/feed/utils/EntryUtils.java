@@ -8,6 +8,8 @@ import org.apache.abdera.model.Feed;
 import org.apache.abdera.model.Link;
 import org.apache.axiom.om.OMElement;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,19 +18,14 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class EntryUtils {
-    public static Entry createEntry(HashMap<String, String> map, Factory factory) {
+    public static Entry createEntry(HashMap<String, String> map, Abdera factory, String base) {
         Entry entry = factory.newEntry();
         entry.setId(map.get("id"));
-        if(map.get("title") != null) {
-            entry.setTitle(map.get("title"));
-        }
-        if(map.get("updated") != null) {
-            entry.setUpdated(map.get("updated"));
-        }
-        if(map.get("content") != null) {
-            entry.setContent(map.get("content"));
-        }
+        entry.setTitle(map.get("title"));
+        entry.setContent(map.get("content"));
+        entry.addLink(map.get("link"));
         entry.setUpdated(new Date());
+        entry.addAuthor(map.get("author"));
         return entry;
     }
 

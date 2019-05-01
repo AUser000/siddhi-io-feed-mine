@@ -4,8 +4,9 @@ import javax.xml.namespace.QName;
 
 public class Constants {
 
-    public static final int HTTP_CREATED = 201;
-    public static final int HTTP_OK = 200;
+    public static final String HTTP_CREATED = "201";
+    public static final String HTTP_OK = "201";
+    public static final String HTTP_RESPONSE_CODE = "http.response.code";
 
     private Constants() {}
 
@@ -13,15 +14,16 @@ public class Constants {
     public static final String PASSWORD = "password";
     public static final String CREDENTIALS = "admin";
 
-    public static final String FEED_UPDATE = "atom.update";
-    public static final String FEED_CREATE = "atom.create";
-    public static final String FEED_DELETE = "atom.delete";
+
+    public static final String ATOM_FUNC = "atom.func";
+    public static final String FEED_UPDATE = "update";
+    public static final String FEED_CREATE = "create";
+    public static final String FEED_DELETE = "delete";
 
     public static final String ATOM = "atom";
     public static final String RSS = "rss";
 
     public static final String URL = "url";
-    public static final String ATOM_FUNC = "feed.function";
     public static final String REQUEST_INTERVAL = "request.interval";
     public static final String FEED_TYPE = "feed.type";
 

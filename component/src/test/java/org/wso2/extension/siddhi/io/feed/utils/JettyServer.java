@@ -28,7 +28,6 @@ public class JettyServer {
         setupAbdera("/");
         Context context = new Context(server, "/", Context.SESSIONS);
         context.addServlet(new ServletHolder(new AbderaServlet() {
-
             @Override
             protected Provider createProvider() {
                 customerProvider.init(getAbdera(), null);
@@ -53,7 +52,7 @@ public class JettyServer {
     private void setupAbdera(String base) throws Exception {
         customerProvider = new DefaultProvider(base);
 
-        CustomerAdapter ca = new CustomerAdapter();
+        NewsAdapter ca = new NewsAdapter();
         ca.setHref("news");
 
         SimpleWorkspaceInfo wi = new SimpleWorkspaceInfo();
@@ -62,4 +61,5 @@ public class JettyServer {
 
         customerProvider.addWorkspace(wi);
     }
+
 }

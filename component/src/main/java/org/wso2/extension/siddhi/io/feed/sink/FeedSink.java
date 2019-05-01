@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,19 +67,24 @@ import java.util.Map;
                 @Parameter(name = Constants.URL,
                         description = "address of the feed end point",
                         type = DataType.STRING),
-                @Parameter(name = Constants.FEED_CREATE,
+                @Parameter(name = Constants.ATOM_FUNC,
                         description = "atom fn of the request",
                         type = DataType.STRING),
                 @Parameter(name = Constants.USERNAME,
                         description = "User name of the basic auth",
                         optional = true,
                         defaultValue = Constants.CREDENTIALS,
-                        type = DataType.INT),
+                        type = DataType.STRING),
                 @Parameter(name = Constants.PASSWORD,
                         description = "Password of the basic auth",
                         optional = true,
                         defaultValue = Constants.CREDENTIALS,
                         type = DataType.INT),
+                @Parameter(name = Constants.HTTP_RESPONSE_CODE,
+                        description = "response code for http",
+                        optional = true,
+                        defaultValue = Constants.HTTP_CREATED,
+                        type = DataType.INT)
         },
         examples = {
                 @Example(
@@ -94,9 +100,9 @@ public class FeedSink extends Sink {
     private URL url;
     private BasicAuthProperties authProperties;
     private Abdera abdera;
-    private Factory factory;
     private AbderaClient abderaClient;
-    private RequestOptions opts;
+    private int httpResponse;
+    private String atomFunc;
 
     @Override
     public Class[] getSupportedInputEventClasses() {
@@ -119,9 +125,21 @@ public class FeedSink extends Sink {
         }
         authProperties = validateCredentials();
         abdera = new Abdera();
-        factory = abdera.getFactory();
         abderaClient = new AbderaClient(abdera);
-        opts = new RequestOptions();
+        httpResponse = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.HTTP_RESPONSE_CODE, Constants.HTTP_CREATED));
+        atomFunc = optionHolder.validateAndGetStaticValue(Constants.ATOM_FUNC, Constants.FEED_CREATE);
+        if(authProperties.isEnable()) {
+            abderaClient.registerTrustManager();
+            try {
+                abderaClient.addCredentials(String.valueOf(url),
+                        "realm",
+                        "basic",
+                        new UsernamePasswordCredentials(authProperties.getUserName(), authProperties.getUserPass()));
+            } catch (URISyntaxException e) {
+                // TODO :- check again
+                log.info("error on : " , e);
+            }
+        }
     }
 
     private BasicAuthProperties validateCredentials() {
@@ -139,77 +157,46 @@ public class FeedSink extends Sink {
     @Override
     public void publish(Object payload, DynamicOptions dynamicOptions) throws ConnectionUnavailableException {
         HashMap map = (HashMap) payload;
-        if(authProperties.isEnable()) {
-            abderaClient.registerTrustManager();
-            try {
-                abderaClient.addCredentials(String.valueOf(url),
-                        "realm",
-                        "basic",
-                        new UsernamePasswordCredentials(authProperties.getUserName(), authProperties.getUserPass()));
-            } catch (URISyntaxException e) {
-                // TODO :- check again
-                log.info(" eroor on : " , e);
-            }
+
+        Entry entry = EntryUtils.createEntry(map, abdera, url.toString());
+        ClientResponse resp = null;
+        if(atomFunc.equals(Constants.FEED_CREATE)) {
+            resp = abderaClient.post(url.toString() , entry);
+        } else if(atomFunc.equals(Constants.FEED_DELETE)) {
+            resp = abderaClient.delete((String)map.get("id"));
+        } else if(atomFunc.equals(Constants.FEED_UPDATE)) {
+            resp = abderaClient.put(url.toString(), entry);
         }
 
-
-        opts.setContentType("application/atom+xml;type=entry");
-        Entry entry = EntryUtils.createEntry(map, factory);
-        ClientResponse resp = abderaClient.post(url.toString(), entry, opts);
-        if(resp.getStatus() != Constants.HTTP_CREATED) {
+        if(resp.getStatus() != httpResponse) {
+            System.out.println(resp.getStatus());
+            System.out.println(resp.getStatusText());
             throw new RuntimeException();
         }
+        resp.release();
 
     }
 
-
-    /**
-     * This method will be called before the processing method.
-     * Intention to establish connection to publish event.
-     * @throws ConnectionUnavailableException if end point is unavailable the ConnectionUnavailableException thrown
-     *                                        such that the  system will take care retrying for connection
-     */
     @Override
     public void connect() throws ConnectionUnavailableException {
 
     }
 
-    /**
-     * Called after all publishing is done, or when {@link ConnectionUnavailableException} is thrown
-     * Implementation of this method should contain the steps needed to disconnect from the sink.
-     */
     @Override
     public void disconnect() {
 
     }
 
-    /**
-     * The method can be called when removing an event receiver.
-     * The cleanups that have to be done after removing the receiver could be done here.
-     */
     @Override
     public void destroy() {
         abderaClient.clearCredentials();
     }
 
-    /**
-     * Used to collect the serializable state of the processing element, that need to be
-     * persisted for reconstructing the element to the same state on a different point of time
-     * This is also used to identify the internal states and debugging
-     * @return all internal states should be return as an map with meaning full keys
-     */
     @Override
     public Map<String, Object> currentState() {
             return null;
     }
 
-    /**
-     * Used to restore serialized state of the processing element, for reconstructing
-     * the element to the same state as if was on a previous point of time.
-     *
-     * @param map the stateful objects of the processing element as a map.
-     *              This map will have the  same keys that is created upon calling currentState() method.
-     */
     @Override
     public void restoreState(Map<String, Object> map) {
 

@@ -17,7 +17,7 @@
  */
 package org.wso2.extension.siddhi.io.feed.utils;
 
-public class Customer {
+public class News {
     private int id;
     private String name;
 

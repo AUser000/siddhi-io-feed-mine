@@ -26,7 +26,7 @@ public class TestCaseOfFeedSource {
     }
 
     @Test
-    public void Source() throws InterruptedException {
+    public void sourceForAtom() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
         log.info("                           SNMP Version 1 Basic Source                               ");
@@ -62,5 +62,41 @@ public class TestCaseOfFeedSource {
         Thread.sleep(5000);
         siddhiManager.shutdown();
     }
+
+    @Test
+    public void sourceForRss() throws InterruptedException {
+
+        log.info("-------------------------------------------------------------------------------------");
+        log.info("                           SNMP Version 1 Basic Source                               ");
+        log.info("-------------------------------------------------------------------------------------");
+
+        // https://wso2.org/jenkins/job/siddhi/job/siddhi-io-tcp/rssAll
+        // http://feeds.bbci.co.uk/news/rss.xml
+        // http://rss.cnn.com/rss/edition.rss
+        // http://feeds.bbci.co.uk/news/rss.xml#
+        // http://localhost:9002/employee
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        String siddhiApp = "@App:name('test') \n" +
+
+                "@source(type='feed', \n" +
+                "url = 'http://localhost:3098/news', \n" +
+                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false'), \n" +
+                "request.interval = '1', \n" +
+                "feed.type = 'rss') \n" +
+                " define stream inputStream(link string, title string, id string, published string);\n";
+
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
+        executionPlanRuntime.addCallback("inputStream", new StreamCallback() {
+            @Override
+            public void receive(Event[] events) {
+                EventPrinter.print(events);
+            }
+        });
+        executionPlanRuntime.start();
+        Thread.sleep(5000);
+        siddhiManager.shutdown();
+    }
+
 }
 

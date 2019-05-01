@@ -36,15 +36,15 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.xml.namespace.QName;
 
-public class CustomerAdapter extends AbstractEntityCollectionAdapter<Customer> {
-    private static final String ID_PREFIX = "urn:acme:customer:";
+public class NewsAdapter extends AbstractEntityCollectionAdapter<News> {
+    private static final String ID_PREFIX = "wso2:news:db:";
 
     private AtomicInteger nextId = new AtomicInteger(1000);
-    private Map<Integer, Customer> customers = new HashMap<Integer, Customer>();
+    private Map<Integer, News> customers = new HashMap<Integer, News>();
     private Factory factory = new Abdera().getFactory();
 
     public String getId(RequestContext request) {
-        return "tag:example.org,2007:feed";
+        return "tag:example.org,2019:feed";
     }
 
     public ResponseContext getCategories(RequestContext request) {
@@ -52,26 +52,24 @@ public class CustomerAdapter extends AbstractEntityCollectionAdapter<Customer> {
     }
 
     @Override
-    public Customer postEntry(String title,
+    public News postEntry(String title,
                               IRI id,
                               String summary,
                               Date updated,
                               List<Person> authors,
                               Content content,
                               RequestContext request) throws ResponseContextException {
-        Customer customer = contentToCustomer(content);
+        News customer = contentToNews(content);
         customers.put(customer.getId(), customer);
-
         return customer;
     }
 
-    private Customer contentToCustomer(Content content) {
-        Customer customer = new Customer();
-
-        return contentToCustomer(content, customer);
+    private News contentToNews(Content content) {
+        News customer = new News();
+        return contentToNews(content, customer);
     }
 
-    private Customer contentToCustomer(Content content, Customer customer) {
+    private News contentToNews(Content content, News customer) {
         Element firstChild = content.getFirstChild();
         //customer.setName(firstChild.getAttributeValue("name"));
         customer.setName(content.getWrappedValue());
@@ -80,8 +78,22 @@ public class CustomerAdapter extends AbstractEntityCollectionAdapter<Customer> {
     }
 
     public void deleteEntry(String resourceName, RequestContext request) throws ResponseContextException {
-        Integer id = getIdFromResourceName(resourceName);
-        customers.remove(id);
+        System.out.println("---------------------------------------------------> deleting ");
+        //Integer id = getIdFromResourceName(resourceName);
+
+        System.out.println("before remove");
+        System.out.println("------------------>" + resourceName);
+        for(Map.Entry entry: customers.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
+
+        String id = resourceName.replace("-Content", "");
+        customers.remove(Integer.parseInt(id));
+
+        System.out.println("after remove");
+        for(Map.Entry entry: customers.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
     }
 
     public String getAuthor(RequestContext request) {
@@ -89,26 +101,22 @@ public class CustomerAdapter extends AbstractEntityCollectionAdapter<Customer> {
     }
 
     @Override
-    public List<Person> getAuthors(Customer entry, RequestContext request) throws ResponseContextException {
+    public List<Person> getAuthors(News entry, RequestContext request) throws ResponseContextException {
         Person author = request.getAbdera().getFactory().newAuthor();
-        author.setName("Acme Industries");
+        author.setName("WSO2");
         return Arrays.asList(author);
     }
 
-    public Object getContent(Customer entry, RequestContext request) {
+    public Object getContent(News entry, RequestContext request) {
         Content content = factory.newContent();
-        //Element customerEl = factory.newElement(new QName("customer"));
-        //customerEl.setAttributeValue(new QName("name"), entry.getName());
-
-        //content.setValueElement(customerEl);
         return entry.getName();
     }
 
-    public Iterable<Customer> getEntries(RequestContext request) {
+    public Iterable<News> getEntries(RequestContext request) {
         return customers.values();
     }
 
-    public Customer getEntry(String resourceName, RequestContext request) throws ResponseContextException {
+    public News getEntry(String resourceName, RequestContext request) throws ResponseContextException {
         Integer id = getIdFromResourceName(resourceName);
         return customers.get(id);
     }
@@ -122,40 +130,40 @@ public class CustomerAdapter extends AbstractEntityCollectionAdapter<Customer> {
         return id;
     }
 
-    public Customer getEntryFromId(String id, RequestContext request) {
+    public News getEntryFromId(String id, RequestContext request) {
         return customers.get(new Integer(id));
     }
 
-    public String getId(Customer entry) {
+    public String getId(News entry) {
         // TODO: is this valid?
         return ID_PREFIX + entry.getId();
     }
 
-    public String getName(Customer entry) {
+    public String getName(News entry) {
         return entry.getId() + "-" + entry.getName().replaceAll(" ", "_");
     }
 
     public String getTitle(RequestContext request) {
-        return "Acme Customer Database";
+        return "WSO2 News Database";
     }
 
-    public String getTitle(Customer entry) {
+    public String getTitle(News entry) {
         return entry.getName();
     }
 
-    public Date getUpdated(Customer entry) {
+    public Date getUpdated(News entry) {
         return new Date();
     }
 
     @Override
-    public void putEntry(Customer entry,
+    public void putEntry(News entry,
                          String title,
                          Date updated,
                          List<Person> authors,
                          String summary,
                          Content content,
                          RequestContext request) throws ResponseContextException {
-        contentToCustomer(content, entry);
+        contentToNews(content, entry);
     }
 
 }
