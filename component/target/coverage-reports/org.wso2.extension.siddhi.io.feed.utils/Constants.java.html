@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Constants.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Siddhi io feed extension</a> &gt; <a href="index.source.html" class="el_package">org.wso2.extension.siddhi.io.feed.utils</a> &gt; <span class="el_source">Constants.java</span></div><h1>Constants.java</h1><pre class="source lang-java linenums">package org.wso2.extension.siddhi.io.feed.utils;
+
+import javax.xml.namespace.QName;
+
+/**
+ * This is a sample class-level comment, explaining what the extension class does.
+ */
+public class Constants {
+
+    public static final String HTTP_CREATED = &quot;201&quot;;
+    public static final String HTTP_OK = &quot;201&quot;;
+    public static final String HTTP_RESPONSE_CODE = &quot;http.response.code&quot;;
+
+<span class="nc" id="L14">    private Constants() {}</span>
+
+    public static final String USERNAME = &quot;username&quot;;
+    public static final String PASSWORD = &quot;password&quot;;
+    public static final String CREDENTIALS = &quot;admin&quot;;
+
+
+    public static final String ATOM_FUNC = &quot;atom.func&quot;;
+    public static final String FEED_UPDATE = &quot;update&quot;;
+    public static final String FEED_CREATE = &quot;create&quot;;
+    public static final String FEED_DELETE = &quot;delete&quot;;
+
+    public static final String ATOM = &quot;atom&quot;;
+    public static final String RSS = &quot;rss&quot;;
+
+    public static final String URL = &quot;url&quot;;
+    public static final String REQUEST_INTERVAL = &quot;request.interval&quot;;
+    public static final String FEED_TYPE = &quot;feed.type&quot;;
+
+
+    public static final String ITEM = &quot;item&quot;;
+    //private static final String RSS = &quot;rss&quot;;
+    private static final String CHANNEL = &quot;channel&quot;;
+    private static final String TITLE = &quot;title&quot;;
+    private static final String GUID = &quot;guid&quot;;
+    private static final String PUBDATE = &quot;pubDate&quot;;
+    private static final String LINK = &quot;link&quot;;
+
+
+<span class="fc" id="L43">    public static final QName FEED_RSS = new QName(RSS);</span>
+<span class="fc" id="L44">    public static final QName FEED_CHANNEL = new QName(CHANNEL);</span>
+<span class="fc" id="L45">    public static final QName FEED_ITEM = new QName(ITEM);</span>
+<span class="fc" id="L46">    public static final QName FEED_TITLE = new QName(TITLE);</span>
+<span class="fc" id="L47">    public static final QName FEED_GUID = new QName(GUID);</span>
+<span class="fc" id="L48">    public static final QName FEED_PUBDATE = new QName(PUBDATE);</span>
+<span class="fc" id="L49">    public static final QName FEED_LINK = new QName(LINK);</span>
+
+    public static final String RSS_FEED_DATE_FORMAT = &quot;EEE, d MMM yyyy HH:mm:ss Z&quot;;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

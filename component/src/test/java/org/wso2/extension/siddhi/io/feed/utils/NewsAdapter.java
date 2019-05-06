@@ -34,7 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.xml.namespace.QName;
 
 public class NewsAdapter extends AbstractEntityCollectionAdapter<News> {
     private static final String ID_PREFIX = "wso2:news:db:";
@@ -78,26 +77,12 @@ public class NewsAdapter extends AbstractEntityCollectionAdapter<News> {
     }
 
     public void deleteEntry(String resourceName, RequestContext request) throws ResponseContextException {
-        System.out.println("---------------------------------------------------> deleting ");
-        //Integer id = getIdFromResourceName(resourceName);
-
-        System.out.println("before remove");
-        System.out.println("------------------>" + resourceName);
-        for(Map.Entry entry: customers.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
-
         String id = resourceName.replace("-Content", "");
         customers.remove(Integer.parseInt(id));
-
-        System.out.println("after remove");
-        for(Map.Entry entry: customers.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
     }
 
     public String getAuthor(RequestContext request) {
-        return "Acme Industries";
+        return "WSO2";
     }
 
     @Override
@@ -163,7 +148,10 @@ public class NewsAdapter extends AbstractEntityCollectionAdapter<News> {
                          String summary,
                          Content content,
                          RequestContext request) throws ResponseContextException {
-        contentToNews(content, entry);
+        News news = customers.get(entry.getId());
+        news.setName(title);
+        //contentToNews(content, entry);
+
     }
 
 }

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntryUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Siddhi io feed extension</a> &gt; <a href="index.source.html" class="el_package">org.wso2.extension.siddhi.io.feed.utils</a> &gt; <span class="el_source">EntryUtils.java</span></div><h1>EntryUtils.java</h1><pre class="source lang-java linenums">package org.wso2.extension.siddhi.io.feed.utils;
+
+import org.apache.abdera.model.Document;
+import org.apache.abdera.model.Entry;
+import org.apache.abdera.model.Feed;
+import org.apache.abdera.model.Link;
+import org.apache.axiom.om.OMElement;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * This is a sample class-level comment, explaining what the extension class does.
+ */
+<span class="nc" id="L23">public class EntryUtils {</span>
+    public static LinkedList&lt;Entry&gt; convertRss (Feed feed, Document doc) {
+<span class="fc" id="L25">        OMElement item = (OMElement) doc.getRoot();</span>
+<span class="fc" id="L26">        Iterator itemValue = item.getFirstElement().getChildrenWithName(Constants.FEED_ITEM);</span>
+<span class="fc" id="L27">        LinkedList&lt;Entry&gt; list = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L28">        DateFormat format = new SimpleDateFormat(Constants.RSS_FEED_DATE_FORMAT, Locale.ENGLISH);</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        while (itemValue.hasNext()) {</span>
+<span class="fc" id="L30">            Entry entry = feed.insertEntry();</span>
+<span class="fc" id="L31">            OMElement omElement = (OMElement) itemValue.next();</span>
+
+<span class="fc" id="L33">            Iterator titleValue = omElement.getChildrenWithName(Constants.FEED_TITLE);</span>
+<span class="fc" id="L34">            OMElement title = (OMElement) titleValue.next();</span>
+<span class="fc" id="L35">            entry.setTitle(title.getText());</span>
+
+<span class="fc" id="L37">            Iterator dateValue = omElement.getChildrenWithName(Constants.FEED_PUBDATE);</span>
+<span class="fc" id="L38">            OMElement updated = (OMElement) dateValue.next();</span>
+            try {
+<span class="fc" id="L40">                Date date = format.parse(updated.getText());</span>
+<span class="fc" id="L41">                entry.setUpdated(date);</span>
+<span class="nc" id="L42">            } catch (ParseException e) {</span>
+                //log.error();
+<span class="fc" id="L44">            }</span>
+
+<span class="fc" id="L46">            Iterator idValue = omElement.getChildrenWithName(Constants.FEED_GUID);</span>
+<span class="fc" id="L47">            OMElement guid = (OMElement) idValue.next();</span>
+<span class="fc" id="L48">            entry.setId(guid.getText());</span>
+
+<span class="fc" id="L50">            Iterator linkValue = omElement.getChildrenWithName(Constants.FEED_LINK);</span>
+<span class="fc" id="L51">            OMElement link = (OMElement) linkValue.next();</span>
+<span class="fc" id="L52">            entry.setBaseUri(link.getText());</span>
+
+<span class="fc" id="L54">            list.add(entry);</span>
+<span class="fc" id="L55">        }</span>
+<span class="fc" id="L56">        return list;</span>
+    }
+
+    public static Map&lt;String, String&gt; entryToMap(Entry entry) {
+<span class="fc" id="L60">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L62">        map.put(&quot;id&quot;, entry.getId().toString());</span>
+<span class="fc" id="L63">        map.put(&quot;title&quot;, entry.getTitle());</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (entry.getLinks() != null) {</span>
+<span class="fc" id="L65">            ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            for (Link l:entry.getLinks()) {</span>
+<span class="fc" id="L67">                list.add(l.getHref().toString());</span>
+<span class="fc" id="L68">            }</span>
+<span class="fc" id="L69">            map.put(&quot;link&quot;, String.join(&quot;,&quot;, list));</span>
+        }
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (entry.getUpdated() != null) {</span>
+<span class="fc" id="L72">            map.put(&quot;updated&quot;, entry.getUpdated().toString());</span>
+        }
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (entry.getAuthor() != null) {</span>
+<span class="nc" id="L75">            map.put(&quot;author&quot;, entry.getAuthor().toString());</span>
+        }
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (entry.getPublished() != null) {</span>
+<span class="fc" id="L78">            map.put(&quot;published&quot;, entry.getPublished().toString());</span>
+        }
+<span class="fc" id="L80">        return map;</span>
+    }
+
+    public static Entry createEntry(HashMap&lt;String, String&gt; map, Entry entry) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for (String key: map.keySet()) {</span>
+<span class="fc" id="L85">            switchReturn(key, entry, map);</span>
+<span class="fc" id="L86">        }</span>
+<span class="fc" id="L87">        entry.setUpdated(new Date());</span>
+<span class="fc" id="L88">        return entry;</span>
+    }
+
+    private static Entry switchReturn(String key, Entry entry, Map&lt;String, String&gt; map) {
+<span class="pc bpc" id="L92" title="7 of 22 branches missed.">        switch (key) {</span>
+            case &quot;id&quot; :
+<span class="fc" id="L94">                entry.setId(map.get(&quot;id&quot;));</span>
+<span class="fc" id="L95">                return entry;</span>
+            case &quot;title&quot; :
+<span class="fc" id="L97">                entry.setTitle(map.get(&quot;title&quot;));</span>
+<span class="fc" id="L98">                return entry;</span>
+            case &quot;content&quot; :
+<span class="fc" id="L100">                entry.setContent(map.get(&quot;content&quot;));</span>
+<span class="fc" id="L101">                return entry;</span>
+            case &quot;link&quot; :
+<span class="fc" id="L103">                entry.addLink(map.get(&quot;link&quot;));</span>
+<span class="fc" id="L104">                return entry;</span>
+            case &quot;author&quot; :
+<span class="fc" id="L106">                entry.addAuthor(map.get(&quot;author&quot;));</span>
+<span class="fc" id="L107">                return entry;</span>
+            default:
+<span class="nc" id="L109">                return entry;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

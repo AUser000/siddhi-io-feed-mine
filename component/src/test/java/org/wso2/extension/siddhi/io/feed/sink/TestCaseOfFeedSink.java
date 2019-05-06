@@ -7,6 +7,7 @@ import org.apache.abdera.model.Feed;
 import org.apache.abdera.protocol.client.AbderaClient;
 import org.apache.abdera.protocol.client.ClientResponse;
 import org.apache.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -19,6 +20,7 @@ import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.stream.output.StreamCallback;
 import org.wso2.siddhi.core.util.EventPrinter;
+import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
 import java.util.Date;
 
@@ -29,21 +31,17 @@ public class TestCaseOfFeedSink {
     private static AbderaClient client = new AbderaClient();
 
     private static String base;
-    private static String feedBase;
 
     @BeforeClass
     public void startServer() throws Exception {
-        int port = 3000;//PortAllocator.allocatePort();
+        int port = PortAllocator.allocatePort();
         server = new JettyServer(port);
-        server.start();//(CustomProvider.class);
+        server.start();
         base = "http://localhost:" + port + "/news";
-        feedBase = base;// + "/feed";
-
     }
 
     @AfterClass
     public void stopServer() throws Exception {
-        //Thread.sleep(600000);
         server.stop();
     }
 
@@ -59,7 +57,7 @@ public class TestCaseOfFeedSink {
         String siddhiApp = "@App:name('test') \n" +
 
                 "@sink(type='feed', \n" +
-                "url = '"+ feedBase +"', \n" +
+                "url = '" + base + "', \n" +
                 "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
                 " define stream outputStream(id string, title string, content string, link string, author string);\n";
 
@@ -74,34 +72,46 @@ public class TestCaseOfFeedSink {
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("outputStream");
         executionPlanRuntime.start();
 
-        inputHandler.send(new Object[]{base +"/feed/entries/1", "", "Content", "sample.com", "David Becom"});
-        inputHandler.send(new Object[]{base +"/feed/entries/2", "", "Content", "example.com", "Renaldo Axio"});
-        inputHandler.send(new Object[]{base +"/feed/entries/3", "", "Content", "example7.com", "Renaldo-Axio"});
-        inputHandler.send(new Object[]{base +"/feed/entries/2", "", "Content", "example.com", "Renaldo Axio"});
-//        inputHandler.send(new Object[]{base +"/feed/entries/2", "Test Title 2", "Content", "example.com", "Renaldo Axio"});
-//        inputHandler.send(new Object[]{base +"/feed/entries/2", "Test Title 2", "Content", "example.com", "Renaldo Axio"});
-
+        inputHandler.send(new Object[]{base + "/feed/entries/1", "Title1", "Content", "sample.com", "David Becom"});
+        inputHandler.send(new Object[]{base + "/feed/entries/2", "Title2", "Content", "example.com", "Renaldo Axio"});
+        inputHandler.send(new Object[]{base + "/feed/entries/3", "Title3", "Content", "example7.com", "Renaldo-Axio"});
+        inputHandler.send(new Object[]{base + "/feed/entries/2", "Title4", "Content", "example.com", "Renaldo Axio"});
 
         siddhiManager.shutdown();
+
+        ClientResponse resp = client.get(base);
+        Document<Feed> feedDoc = resp.getDocument();
+        Feed feed = feedDoc.getRoot();
+        Entry entry = feed.getEntries().get(0);
+        Assert.assertTrue("Content".equals(entry.getContent()));
+
     }
 
-    @Test(enabled = false)
+    @Test(dependsOnMethods = "basicSink")
     public void sinkForUpdate() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
-        log.info("                           FEED Sink Test                               ");
+        log.info("                             FEED Sink UPDATE Test                                   ");
         log.info("-------------------------------------------------------------------------------------");
 
         SiddhiManager siddhiManager = new SiddhiManager();
 
+        ClientResponse resp = client.get(base);
+        Document<Feed> feedDoc = resp.getDocument();
+        Feed feed = feedDoc.getRoot();
+        Entry entry = feed.getEntries().get(1);
+
+        String editLink = entry.getEditLinkResolvedHref().toString();
+        resp.release();
+
         String siddhiApp = "@App:name('test') \n" +
 
                 "@sink(type='feed', \n" +
-                "url = '"+base+"', \n" +
-                "http.response.code = '200', \n" +
+                "url = '" + editLink + "', \n" +
+                "http.response.code = '204', \n" +
                 "atom.func = 'update', \n" +
                 "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
-                " define stream outputStream(id string, published string, content string, title string);\n";
+                " define stream outputStream(content string, title string);\n";
 
         SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
         executionPlanRuntime.addCallback("outputStream", new StreamCallback() {
@@ -113,15 +123,23 @@ public class TestCaseOfFeedSink {
 
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("outputStream");
         executionPlanRuntime.start();
-        inputHandler.send(new Object[]{"1001", new Date(), "name", "hello"});
+
+        inputHandler.send(new Object[]{"XXXXXXX", "AAAAAA"});
         siddhiManager.shutdown();
+
+        resp = client.get(base);
+        feedDoc = resp.getDocument();
+        feed = feedDoc.getRoot();
+        Entry entry1 = feed.getEntries().get(1);
+
+        Assert.assertTrue(entry1.getTitle().equals("AAAAAA"));
     }
 
-    @Test(dependsOnMethods = "basicSink")
+    @Test(dependsOnMethods = "sinkForUpdate")
     public void sinkForDelete() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
-        log.info("                           FEED Sink Test                               ");
+        log.info("                           FEED Sink DELETE Test                               ");
         log.info("-------------------------------------------------------------------------------------");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -129,7 +147,7 @@ public class TestCaseOfFeedSink {
         String siddhiApp = "@App:name('test') \n" +
 
                 "@sink(type='feed', \n" +
-                "url = '"+feedBase+"', \n" +
+                "url = '" + base + "', \n" +
                 "http.response.code = '204', \n" +
                 "atom.func = 'delete', \n" +
                 "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
@@ -146,37 +164,23 @@ public class TestCaseOfFeedSink {
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("outputStream");
         executionPlanRuntime.start();
 
-        ClientResponse resp = client.get(feedBase);
-        Document<Feed> feed_doc = resp.getDocument();
-        Feed feed = feed_doc.getRoot();
-        System.out.println("before the deleting");
-        for(Entry entry4:feed.getEntries()) {
-            System.out.println(entry4.getId().toString());
-        }
+        ClientResponse resp = client.get(base);
+        Document<Feed> feedDoc = resp.getDocument();
+        Feed feed = feedDoc.getRoot();
         Entry entry = feed.getEntries().get(0);
 
         String edit = entry.getEditLinkResolvedHref().toString();
-        String edit2 = entry.getEditLinkResolvedHref().toString();
-        System.out.println("link to edit  ---> " + edit);
-
-
         resp.release();
 
-        System.out.println("trying to remove " + edit);
-        //inputHandler.send(new Object[]{edit});
         inputHandler.send(new Object[]{edit});
-        //inputHandler.send(new Object[]{"http://localhost:3000/sample/bar"});
-
-
         siddhiManager.shutdown();
 
-        System.out.println("after the deleting");
-        ClientResponse resp2 = client.get(feedBase);
-        Document<Feed> feed_doc2 = resp2.getDocument();
-        Feed feed2 = feed_doc2.getRoot();
-        for(Entry entry3:feed2.getEntries()) {
-            System.out.println(entry3.getId().toString());
-        }
+        ClientResponse resp2 = client.get(base);
+        Document<Feed> feedDoc2 = resp2.getDocument();
+        Feed feed2 = feedDoc2.getRoot();
+        Entry entry2 = feed2.getEntries().get(0);
+
+        Assert.assertFalse(entry.getId().equals(entry2.getId()));
         resp.release();
     }
 
@@ -193,7 +197,7 @@ public class TestCaseOfFeedSink {
         String siddhiApp = "@App:name('test') \n" +
 
                 "@sink(type='feed', \n" +
-                "url = '"+base+"', \n" +
+                "url = '" + base + "', \n" +
                 "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
                 " define stream outputStream(id string, published string, content string, title string);\n";
 
@@ -210,11 +214,80 @@ public class TestCaseOfFeedSink {
 
         inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
         inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
-        //inputHandler.send(new Object[]{"http://localhost:3000/sample/bar", new Date(), "nmae", "helloow"});
 
 
         siddhiManager.shutdown();
     }
 
+    @Test(expectedExceptions = SiddhiAppValidationException.class)
+    public void sinkForValidation() throws InterruptedException {
+
+        log.info("-------------------------------------------------------------------------------------");
+        log.info("                           FEED Sink Test                                            ");
+        log.info("-------------------------------------------------------------------------------------");
+
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        String siddhiApp = "@App:name('test') \n" +
+
+                "@Source(type='feed', \n" +
+                "feed.type = 'Atomm', \n" +
+                "url = '" + base + "', \n" +
+                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
+                " define stream outputStream(id string, published string, content string, title string);\n";
+
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
+        executionPlanRuntime.addCallback("outputStream", new StreamCallback() {
+            @Override
+            public void receive(Event[] events) {
+                EventPrinter.print(events);
+            }
+        });
+
+        InputHandler inputHandler = executionPlanRuntime.getInputHandler("outputStream");
+        executionPlanRuntime.start();
+
+        inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
+        inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
+
+
+        siddhiManager.shutdown();
+    }
+
+
+    @Test(expectedExceptions = SiddhiAppValidationException.class)
+    public void sinkForValidation2() throws InterruptedException {
+
+        log.info("-------------------------------------------------------------------------------------");
+        log.info("                           FEED Url Malformed                                            ");
+        log.info("-------------------------------------------------------------------------------------");
+
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        String siddhiApp = "@App:name('test') \n" +
+
+                "@Source(type='feed', \n" +
+                "feed.type = 'Atomm', \n" +
+                "url = 'localhost.', \n" +
+                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
+                " define stream outputStream(id string, published string, content string, title string);\n";
+
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
+        executionPlanRuntime.addCallback("outputStream", new StreamCallback() {
+            @Override
+            public void receive(Event[] events) {
+                EventPrinter.print(events);
+            }
+        });
+
+        InputHandler inputHandler = executionPlanRuntime.getInputHandler("outputStream");
+        executionPlanRuntime.start();
+
+        inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
+        inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
+
+
+        siddhiManager.shutdown();
+    }
 }
 

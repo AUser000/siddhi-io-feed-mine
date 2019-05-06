@@ -1,0 +1,54 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1557113843692
+Build-Jdk: 1.8.0_201
+Built-By: dhanushka
+Bundle-Contributors: WSO2 Inc
+Bundle-Copyright: WSO2 Inc
+Bundle-Description: WSO2 is an open source application development softw
+ are company focused on providing service-orientedarchitecture solutions
+  for professional developers.
+Bundle-Developers: WSO2 Inc
+Bundle-DocURL: https://docs.wso2.com
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: siddhi-io-feed
+Bundle-SymbolicName: siddhi-io-feed
+Bundle-Vendor: WSO2 Inc
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+DynamicImport-Package: *
+Export-Package: org.wso2.extension.siddhi.io.feed.sink;uses:="org.wso2.s
+ iddhi.annotation,org.wso2.siddhi.annotation.util,org.wso2.siddhi.core.c
+ onfig,org.wso2.siddhi.core.exception,org.wso2.siddhi.core.stream.output
+ .sink,org.wso2.siddhi.core.util.config,org.wso2.siddhi.core.util.transp
+ ort,org.wso2.siddhi.query.api.definition";version="1.0.0",org.wso2.exte
+ nsion.siddhi.io.feed.source;uses:="org.wso2.siddhi.annotation,org.wso2.
+ siddhi.annotation.util,org.wso2.siddhi.core.config,org.wso2.siddhi.core
+ .exception,org.wso2.siddhi.core.stream.input.source,org.wso2.siddhi.cor
+ e.util.config,org.wso2.siddhi.core.util.transport";version="1.0.0",org.
+ wso2.extension.siddhi.io.feed.utils;uses:="javax.xml.namespace,org.apac
+ he.abdera.model";version="1.0.0",org.wso2.extension.siddhi.io.feed;vers
+ ion="1.0.0"
+Import-Package: javax.xml.namespace;resolution:=optional,org.apache.abde
+ ra;resolution:=optional;version="[1.1,2)",org.apache.abdera.factory;res
+ olution:=optional;version="[1.1,2)",org.apache.abdera.i18n.iri;resoluti
+ on:=optional;version="[1.1,2)",org.apache.abdera.model;resolution:=opti
+ onal;version="[1.1,2)",org.apache.abdera.parser;resolution:=optional;ve
+ rsion="[1.1,2)",org.apache.abdera.protocol.client;resolution:=optional;
+ version="[1.1,2)",org.apache.axiom.om;resolution:=optional,org.apache.c
+ ommons.httpclient;resolution:=optional,org.apache.log4j;resolution:=opt
+ ional;version="[1.2,2)",org.wso2.extension.siddhi.io.feed.utils;resolut
+ ion:=optional,org.wso2.siddhi.annotation;resolution:=optional;version="
+ [4.4,5)",org.wso2.siddhi.annotation.util;resolution:=optional;version="
+ [4.4,5)",org.wso2.siddhi.core.config;resolution:=optional;version="[4.4
+ ,5)",org.wso2.siddhi.core.exception;resolution:=optional;version="[4.4,
+ 5)",org.wso2.siddhi.core.stream.input.source;resolution:=optional;versi
+ on="[4.4,5)",org.wso2.siddhi.core.stream.output.sink;resolution:=option
+ al;version="[4.4,5)",org.wso2.siddhi.core.util.config;resolution:=optio
+ nal;version="[4.4,5)",org.wso2.siddhi.core.util.transport;resolution:=o
+ ptional;version="[4.4,5)",org.wso2.siddhi.query.api.definition;resoluti
+ on:=optional;version="[4.4,5)",org.wso2.siddhi.query.api.exception;reso
+ lution:=optional;version="[4.4,5)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+SCM-Revision: 0b3c0dd453198c42950a5f1910286ecde6ef0f2f
+Tool: Bnd-3.0.0.201509101326

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>TestNG Report</title><style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}</style></head><body><table><tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr><tr><th colspan="7">Siddhi-Io-Feed-Test-Suite</th></tr><tr><td><a href="#t0">Siddhi-io-feed-tests</a></td><td class="num">8</td><td class="num">0</td><td class="num">0</td><td class="num">72,955</td><td></td><td></td></tr></table><table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Siddhi-Io-Feed-Test-Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Siddhi-io-feed-tests &#8212; passed</th></tr><tr class="passedeven"><td rowspan="5">org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink</td><td><a href="#m0">basicSink</a></td><td rowspan="1">1557113769974</td><td rowspan="1">1365</td></tr><tr class="passedeven"><td><a href="#m1">sinkForDelete</a></td><td rowspan="1">1557113771494</td><td rowspan="1">34</td></tr><tr class="passedeven"><td><a href="#m2">sinkForUpdate</a></td><td rowspan="1">1557113771394</td><td rowspan="1">99</td></tr><tr class="passedeven"><td><a href="#m3">sinkForValidation</a></td><td rowspan="1">1557113771342</td><td rowspan="1">17</td></tr><tr class="passedeven"><td><a href="#m4">sinkForValidation2</a></td><td rowspan="1">1557113771360</td><td rowspan="1">21</td></tr><tr class="passedodd"><td rowspan="3">org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource</td><td><a href="#m5">sourceForAtom</a></td><td rowspan="1">1557113771532</td><td rowspan="1">5016</td></tr><tr class="passedodd"><td><a href="#m6">sourceForPauseAndResume</a></td><td rowspan="1">1557113776549</td><td rowspan="1">61016</td></tr><tr class="passedodd"><td><a href="#m7">sourceForRss</a></td><td rowspan="1">1557113837566</td><td rowspan="1">5014</td></tr></tbody></table><h2>Siddhi-io-feed-tests</h2><h3 id="m0">org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink#basicSink</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m1">org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink#sinkForDelete</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m2">org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink#sinkForUpdate</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m3">org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink#sinkForValidation</h3><table class="result"><tr><th>Expected Exception</th></tr><tr><td><div class="stacktrace">org.wso2.siddhi.query.api.exception.SiddhiAppValidationException: Error on &apos;test&apos; @ Line: 5. Position: 61, near &apos;@Source(type=&apos;feed&apos;, 
+feed.type = &apos;Atomm&apos;, 
+url = &apos;http://localhost:45597/news&apos;, 
+@map(type = &apos;keyvalue&apos;, fail.on.missing.attribute = &apos;false&apos;))&apos;. type error
+	at org.wso2.extension.siddhi.io.feed.source.FeedSource.validateType(FeedSource.java:93)
+	at org.wso2.extension.siddhi.io.feed.source.FeedSource.init(FeedSource.java:79)
+	at org.wso2.siddhi.core.stream.input.source.Source.init(Source.java:71)
+	at org.wso2.siddhi.core.util.parser.helper.DefinitionParserHelper.addEventSource(DefinitionParserHelper.java:367)
+	at org.wso2.siddhi.core.util.SiddhiAppRuntimeBuilder.defineStream(SiddhiAppRuntimeBuilder.java:114)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.defineStreamDefinitions(SiddhiAppParser.java:318)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.parse(SiddhiAppParser.java:225)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:65)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:74)
+	at org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink.sinkForValidation(TestCaseOfFeedSink.java:239)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m4">org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink#sinkForValidation2</h3><table class="result"><tr><th>Expected Exception</th></tr><tr><td><div class="stacktrace">org.wso2.siddhi.query.api.exception.SiddhiAppValidationException: Error on &apos;test&apos; @ Line: 5. Position: 61, near &apos;@Source(type=&apos;feed&apos;, 
+feed.type = &apos;Atomm&apos;, 
+url = &apos;localhost.&apos;, 
+@map(type = &apos;keyvalue&apos;, fail.on.missing.attribute = &apos;false&apos;))&apos;.  Url Error in siddhi stream @App:name(&apos;test&apos;) 
+@Source(type=&apos;feed&apos;, 
+feed.type = &apos;Atomm&apos;, 
+url = &apos;localhost.&apos;, 
+@map(type = &apos;keyvalue&apos;, fail.on.missing.attribute = &apos;false&apos;)) 
+ define stream outputStream(id string, published string, content string, title string);
+
+	at org.wso2.extension.siddhi.io.feed.source.FeedSource.init(FeedSource.java:77)
+	at org.wso2.siddhi.core.stream.input.source.Source.init(Source.java:71)
+	at org.wso2.siddhi.core.util.parser.helper.DefinitionParserHelper.addEventSource(DefinitionParserHelper.java:367)
+	at org.wso2.siddhi.core.util.SiddhiAppRuntimeBuilder.defineStream(SiddhiAppRuntimeBuilder.java:114)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.defineStreamDefinitions(SiddhiAppParser.java:318)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.parse(SiddhiAppParser.java:225)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:65)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:74)
+	at org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink.sinkForValidation2(TestCaseOfFeedSink.java:275)
+... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m5">org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource#sourceForAtom</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m6">org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource#sourceForPauseAndResume</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m7">org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource#sourceForRss</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p></body></html>

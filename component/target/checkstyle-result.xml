@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.11.2">
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedSink.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/ResponseFaildException.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/Constants.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/EntryUtils.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/BasicAuthProperties.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/test/java/org/wso2/extension/siddhi/io/feed/sink/TestCaseOfFeedSink.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/test/java/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/PortAllocator.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/News.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/JettyServer.java">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/resources/log4j.properties">
+</file>
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/test/resources/log4j.properties">
+</file>
+</checkstyle>

@@ -1,7 +1,6 @@
 package org.wso2.extension.siddhi.io.feed.source;
 
 import org.apache.log4j.Logger;
-import org.wso2.extension.siddhi.io.feed.utils.BasicAuthProperties;
 import org.wso2.extension.siddhi.io.feed.utils.Constants;
 import org.wso2.siddhi.annotation.Example;
 import org.wso2.siddhi.annotation.Extension;
@@ -31,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @Extension(
         name = "feed",
         namespace = "source",
-        description = " ",
+        description = " can consume atom and rss feed entries ",
         parameters = {
                 @Parameter(name = Constants.URL,
                         description = "address of the feed end point",
@@ -41,22 +40,12 @@ import java.util.concurrent.TimeUnit;
                         type = DataType.STRING),
                 @Parameter(name = Constants.REQUEST_INTERVAL,
                         description = "request interval in minutes",
-                        type = DataType.INT),
-                @Parameter(name = Constants.USERNAME,
-                        description = "User name of the basic auth",
-                        optional = true,
-                        defaultValue = Constants.CREDENTIALS,
-                        type = DataType.INT),
-                @Parameter(name = Constants.PASSWORD,
-                        description = "Password of the basic auth if it available.",
-                        optional = true,
-                        defaultValue = Constants.CREDENTIALS,
-                        type = DataType.INT),
+                        type = DataType.INT)
         },
         examples = {
                 @Example(
                         syntax = " ",
-                        description = " "
+                        description = "  "
                 )
         }
 )
@@ -73,7 +62,6 @@ public class FeedSource extends Source {
     private ScheduledFuture future;
     private SourceEventListener sourceEventListener;
     private ScheduledExecutorService scheduledExecutorService;
-    private BasicAuthProperties basicAuthProperties;
 
     @Override
     public void init(SourceEventListener sourceEventListener, OptionHolder optionHolder,
@@ -85,18 +73,19 @@ public class FeedSource extends Source {
         try {
             url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));
         } catch (MalformedURLException e) {
-            throw new SiddhiAppValidationException("url error");
+            throw new SiddhiAppValidationException(" Url Error in siddhi stream " +
+                    siddhiAppContext.getSiddhiAppString());
         }
-        basicAuthProperties = validateCredentials();
-        type = validateType();
-        requestInterval = validateRequestInterval();
-        scheduledExecutorService = siddhiAppContext.getScheduledExecutorService();
+        this.type = validateType();
+        this.requestInterval = validateRequestInterval();
+        this.scheduledExecutorService = siddhiAppContext.getScheduledExecutorService();
+        this.siddhiAppContext = siddhiAppContext;
     }
 
     private String validateType() {
         String type = optionHolder.validateAndGetStaticValue(Constants.FEED_TYPE);
         type = type.toLowerCase(Locale.ENGLISH);
-        if(type.equals(Constants.RSS)) {
+        if (type.equals(Constants.RSS)) {
             return type;
         } else if (type.equals(Constants.ATOM)) {
             return type;
@@ -110,16 +99,6 @@ public class FeedSource extends Source {
         return requestInterval;
     }
 
-    private BasicAuthProperties validateCredentials() {
-        BasicAuthProperties properties = new BasicAuthProperties();
-        if(!optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS).equals(Constants.CREDENTIALS) ||
-                !optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS).equals(Constants.CREDENTIALS)) {
-            properties.setEnable(true);
-            properties.setUserName(optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS));
-            properties.setUserPass(optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS));
-        }
-        return properties;
-    }
 
     @Override
     public Class[] getOutputEventClasses() {
@@ -129,9 +108,9 @@ public class FeedSource extends Source {
     @Override
     public void connect(ConnectionCallback connectionCallback) throws ConnectionUnavailableException {
         try {
-            listener = new FeedListener(sourceEventListener, url, type, basicAuthProperties);
+            listener = new FeedListener(sourceEventListener, url, type, siddhiAppContext);
         } catch (IOException e) {
-            e.printStackTrace();
+                logger.info(e);
         }
         future = scheduledExecutorService.scheduleAtFixedRate(listener, 0, requestInterval, TimeUnit.MINUTES);
     }

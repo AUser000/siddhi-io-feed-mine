@@ -1,5 +1,8 @@
 package org.wso2.extension.siddhi.io.feed.utils;
 
+/**
+ * This is a sample class-level comment, explaining what the extension class does.
+ */
 public class BasicAuthProperties {
     private String userName;
     private String userPass;
@@ -35,9 +38,9 @@ public class BasicAuthProperties {
         isEnable = enable;
     }
 
-    public byte[] getBytes() {
-        String userpass = getUserName() + ":" + getUserPass();
-        return userpass.getBytes();
-    }
+//    public byte[] getBytes() {
+//        String userpass = getUserName() + ":" + getUserPass();
+//        return userpass.getBytes();
+//    }
 
 }

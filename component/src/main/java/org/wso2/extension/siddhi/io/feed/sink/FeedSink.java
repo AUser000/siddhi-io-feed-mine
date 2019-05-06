@@ -1,11 +1,10 @@
 package org.wso2.extension.siddhi.io.feed.sink;
 
 import org.apache.abdera.Abdera;
-import org.apache.abdera.factory.Factory;
+import org.apache.abdera.model.Document;
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.protocol.client.AbderaClient;
 import org.apache.abdera.protocol.client.ClientResponse;
-import org.apache.abdera.protocol.client.RequestOptions;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.log4j.Logger;
 import org.wso2.extension.siddhi.io.feed.utils.BasicAuthProperties;
@@ -24,7 +23,6 @@ import org.wso2.siddhi.core.util.transport.OptionHolder;
 import org.wso2.siddhi.query.api.definition.StreamDefinition;
 import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -36,39 +34,17 @@ import java.util.Map;
  * This is a sample class-level comment, explaining what the extension class does.
  */
 
-/**
- * Annotation of Siddhi Extension.
- * <pre><code>
- * eg:-
- * {@literal @}Extension(
- * name = "The name of the extension",
- * namespace = "The namespace of the extension",
- * description = "The description of the extension (optional).",
- * //Sink configurations
- * parameters = {
- * {@literal @}Parameter(name = "The name of the first parameter", type = "Supprted parameter types.
- *                              eg:{DataType.STRING,DataType.INT, DataType.LONG etc},dynamic=false ,optinal=true/false ,
- *                              if optional =true then assign default value according the type")
- *   System parameter is used to define common extension wide
- *              },
- * examples = {
- * {@literal @}Example({"Example of the first CustomExtension contain syntax and description.Here,
- *                      Syntax describe default mapping for SourceMapper and description describes
- *                      the output of according this syntax},
- *                      }
- * </code></pre>
- */
-
 @Extension(
         name = "feed",
         namespace = "sink",
-        description = " ",
+        description = " can publish atom feed entries ",
         parameters = {
                 @Parameter(name = Constants.URL,
                         description = "address of the feed end point",
                         type = DataType.STRING),
                 @Parameter(name = Constants.ATOM_FUNC,
-                        description = "atom fn of the request",
+                        description = "atom fn of the request. " +
+                                "acceptance parameters are 'create', 'delete', 'update'",
                         type = DataType.STRING),
                 @Parameter(name = Constants.USERNAME,
                         description = "User name of the basic auth",
@@ -126,9 +102,10 @@ public class FeedSink extends Sink {
         authProperties = validateCredentials();
         abdera = new Abdera();
         abderaClient = new AbderaClient(abdera);
-        httpResponse = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.HTTP_RESPONSE_CODE, Constants.HTTP_CREATED));
+        httpResponse = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.HTTP_RESPONSE_CODE,
+                Constants.HTTP_CREATED));
         atomFunc = optionHolder.validateAndGetStaticValue(Constants.ATOM_FUNC, Constants.FEED_CREATE);
-        if(authProperties.isEnable()) {
+        if (authProperties.isEnable()) {
             abderaClient.registerTrustManager();
             try {
                 abderaClient.addCredentials(String.valueOf(url),
@@ -144,8 +121,10 @@ public class FeedSink extends Sink {
 
     private BasicAuthProperties validateCredentials() {
         BasicAuthProperties properties = new BasicAuthProperties();
-        if(!optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS).equals(Constants.CREDENTIALS) ||
-                !optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS).equals(Constants.CREDENTIALS)) {
+        if (!optionHolder.validateAndGetStaticValue(
+                Constants.USERNAME, Constants.CREDENTIALS).equals(Constants.CREDENTIALS) ||
+                !optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS)
+                        .equals(Constants.CREDENTIALS)) {
             properties.setEnable(true);
             properties.setUserName(optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS));
             properties.setUserPass(optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS));
@@ -157,24 +136,31 @@ public class FeedSink extends Sink {
     @Override
     public void publish(Object payload, DynamicOptions dynamicOptions) throws ConnectionUnavailableException {
         HashMap map = (HashMap) payload;
-
-        Entry entry = EntryUtils.createEntry(map, abdera, url.toString());
         ClientResponse resp = null;
-        if(atomFunc.equals(Constants.FEED_CREATE)) {
+        if (atomFunc.equals(Constants.FEED_CREATE)) {
+            Entry entry = abdera.newEntry();
+            entry = EntryUtils.createEntry(map, entry);
+            entry.setPublished(new Date());
             resp = abderaClient.post(url.toString() , entry);
-        } else if(atomFunc.equals(Constants.FEED_DELETE)) {
-            resp = abderaClient.delete((String)map.get("id"));
-        } else if(atomFunc.equals(Constants.FEED_UPDATE)) {
+            checkAndReleaseResponse(resp);
+        } else if (atomFunc.equals(Constants.FEED_DELETE)) {
+            resp = abderaClient.delete((String) map.get("id"));
+            checkAndReleaseResponse(resp);
+        } else if (atomFunc.equals(Constants.FEED_UPDATE)) {
+            resp = abderaClient.get(url.toString());
+            Document<Entry> doc = resp.getDocument();
+            Entry entry = doc.getRoot();
+            entry =  EntryUtils.createEntry(map, entry);
             resp = abderaClient.put(url.toString(), entry);
+            checkAndReleaseResponse(resp);
         }
+    }
 
-        if(resp.getStatus() != httpResponse) {
-            System.out.println(resp.getStatus());
-            System.out.println(resp.getStatusText());
+    private void checkAndReleaseResponse(ClientResponse resp) {
+        if (resp.getStatus() != httpResponse) {
             throw new RuntimeException();
         }
         resp.release();
-
     }
 
     @Override

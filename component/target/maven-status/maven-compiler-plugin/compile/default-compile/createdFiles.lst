@@ -1,0 +1,8 @@
+org/wso2/extension/siddhi/io/feed/utils/EntryUtils.class
+org/wso2/extension/siddhi/io/feed/source/FeedSource.class
+org/wso2/extension/siddhi/io/feed/source/FeedListener.class
+org/wso2/extension/siddhi/io/feed/utils/Constants.class
+org/wso2/extension/siddhi/io/feed/sink/FeedSink.class
+org/wso2/extension/siddhi/io/feed/sink/ResponseFaildException.class
+org/wso2/extension/siddhi/io/feed/utils/BasicAuthProperties.class
+META-INF/annotations/org.wso2.siddhi.annotation.Extension

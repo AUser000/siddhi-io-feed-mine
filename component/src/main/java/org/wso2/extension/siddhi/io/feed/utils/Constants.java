@@ -2,6 +2,9 @@ package org.wso2.extension.siddhi.io.feed.utils;
 
 import javax.xml.namespace.QName;
 
+/**
+ * This is a sample class-level comment, explaining what the extension class does.
+ */
 public class Constants {
 
     public static final String HTTP_CREATED = "201";
@@ -44,4 +47,6 @@ public class Constants {
     public static final QName FEED_GUID = new QName(GUID);
     public static final QName FEED_PUBDATE = new QName(PUBDATE);
     public static final QName FEED_LINK = new QName(LINK);
+
+    public static final String RSS_FEED_DATE_FORMAT = "EEE, d MMM yyyy HH:mm:ss Z";
 }

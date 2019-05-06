@@ -1,0 +1,8 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Siddhi io feed extension,org.wso2.extension.siddhi.io.feed.source,FeedSource,8,139,0,4,4,36,2,12,2,10
+Siddhi io feed extension,org.wso2.extension.siddhi.io.feed.source,FeedListener,48,142,4,8,9,41,3,8,0,5
+Siddhi io feed extension,org.wso2.extension.siddhi.io.feed.utils,BasicAuthProperties,18,9,0,0,8,3,5,2,5,2
+Siddhi io feed extension,org.wso2.extension.siddhi.io.feed.utils,Constants,3,36,0,0,1,7,1,1,1,1
+Siddhi io feed extension,org.wso2.extension.siddhi.io.feed.utils,EntryUtils,13,280,10,26,4,55,11,16,1,4
+Siddhi io feed extension,org.wso2.extension.siddhi.io.feed.sink,ResponseFaildException,3,0,0,0,2,0,1,0,1,0
+Siddhi io feed extension,org.wso2.extension.siddhi.io.feed.sink,FeedSink,58,189,5,9,14,46,7,13,2,11
