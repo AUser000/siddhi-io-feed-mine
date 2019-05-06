@@ -7,6 +7,7 @@ import org.apache.abdera.protocol.client.AbderaClient;
 import org.apache.abdera.protocol.client.ClientResponse;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.log4j.Logger;
+import org.wso2.extension.siddhi.io.feed.sink.exceptions.FeedErrorResponseException;
 import org.wso2.extension.siddhi.io.feed.utils.BasicAuthProperties;
 import org.wso2.extension.siddhi.io.feed.utils.Constants;
 import org.wso2.extension.siddhi.io.feed.utils.EntryUtils;
@@ -28,6 +29,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -37,14 +39,14 @@ import java.util.Map;
 @Extension(
         name = "feed",
         namespace = "sink",
-        description = " can publish atom feed entries ",
+        description = "The feed sink allows to publish atom feed entries to atom implemented http servers ",
         parameters = {
                 @Parameter(name = Constants.URL,
                         description = "address of the feed end point",
                         type = DataType.STRING),
                 @Parameter(name = Constants.ATOM_FUNC,
-                        description = "atom fn of the request. " +
-                                "acceptance parameters are 'create', 'delete', 'update'",
+                        description = "atom function of the request. " +
+                                "Acceptance parameters are 'create', 'delete', 'update'",
                         type = DataType.STRING),
                 @Parameter(name = Constants.USERNAME,
                         description = "User name of the basic auth",
@@ -79,6 +81,7 @@ public class FeedSink extends Sink {
     private AbderaClient abderaClient;
     private int httpResponse;
     private String atomFunc;
+    private StreamDefinition streamDefinition;
 
     @Override
     public Class[] getSupportedInputEventClasses() {
@@ -100,11 +103,12 @@ public class FeedSink extends Sink {
             throw new SiddhiAppValidationException("url error");
         }
         authProperties = validateCredentials();
+        this.streamDefinition = streamDefinition;
         abdera = new Abdera();
         abderaClient = new AbderaClient(abdera);
         httpResponse = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.HTTP_RESPONSE_CODE,
                 Constants.HTTP_CREATED));
-        atomFunc = optionHolder.validateAndGetStaticValue(Constants.ATOM_FUNC, Constants.FEED_CREATE);
+        atomFunc = validateAtomFn(optionHolder.validateAndGetStaticValue(Constants.ATOM_FUNC, Constants.FEED_CREATE));
         if (authProperties.isEnable()) {
             abderaClient.registerTrustManager();
             try {
@@ -113,9 +117,19 @@ public class FeedSink extends Sink {
                         "basic",
                         new UsernamePasswordCredentials(authProperties.getUserName(), authProperties.getUserPass()));
             } catch (URISyntaxException e) {
-                // TODO :- check again
-                log.info("error on : " , e);
+                log.info(" " , e);
             }
+        }
+    }
+
+    private String validateAtomFn(String atomFunc) {
+        atomFunc = atomFunc.toLowerCase(Locale.ENGLISH);
+        switch (atomFunc) {
+            case Constants.FEED_CREATE : return atomFunc;
+            case Constants.FEED_DELETE : return atomFunc;
+            case Constants.FEED_UPDATE : return atomFunc;
+            default : throw new SiddhiAppValidationException(" Atom finction validation error  in "
+                    + streamDefinition.getId() + ". Acceptance parameters are 'create', 'delete', 'update'");
         }
     }
 
@@ -142,25 +156,23 @@ public class FeedSink extends Sink {
             entry = EntryUtils.createEntry(map, entry);
             entry.setPublished(new Date());
             resp = abderaClient.post(url.toString() , entry);
-            checkAndReleaseResponse(resp);
         } else if (atomFunc.equals(Constants.FEED_DELETE)) {
             resp = abderaClient.delete((String) map.get("id"));
-            checkAndReleaseResponse(resp);
         } else if (atomFunc.equals(Constants.FEED_UPDATE)) {
             resp = abderaClient.get(url.toString());
             Document<Entry> doc = resp.getDocument();
             Entry entry = doc.getRoot();
             entry =  EntryUtils.createEntry(map, entry);
             resp = abderaClient.put(url.toString(), entry);
-            checkAndReleaseResponse(resp);
         }
-    }
 
-    private void checkAndReleaseResponse(ClientResponse resp) {
-        if (resp.getStatus() != httpResponse) {
-            throw new RuntimeException();
+        if (resp != null) {
+            if (resp.getStatus() != httpResponse) {
+                throw new FeedErrorResponseException("Response status conflicts response status code is :" +
+                        resp.getStatus() + "-" + resp.getStatusText());
+            }
+            resp.release();
         }
-        resp.release();
     }
 
     @Override

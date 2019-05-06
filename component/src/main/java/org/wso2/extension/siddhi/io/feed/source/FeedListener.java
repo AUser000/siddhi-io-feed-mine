@@ -32,15 +32,15 @@ public class FeedListener implements Runnable {
     private URL url;
     private Abdera abdera;
     private String type;
-    private SiddhiAppContext siddhiAppContext;
+    private String streamName;
 
     public FeedListener(SourceEventListener sourceEventListener, URL url,
-                        String type, SiddhiAppContext siddhiAppContext) throws IOException {
+                        String type, String streamName) throws IOException {
         this.sourceEventListener = sourceEventListener;
         this.url = url;
         abdera = new Abdera();
         this.type = type;
-        this.siddhiAppContext = siddhiAppContext;
+        this.streamName = streamName;
     }
 
     @Override
@@ -60,13 +60,14 @@ public class FeedListener implements Runnable {
                 Feed feed = factory.newFeed();
                 LinkedList<Entry> list = EntryUtils.convertRss(feed, doc);
                 for (Entry entry : list) {
+                    //TODO fix this double loop
                     Map<String, String> map = EntryUtils.entryToMap(entry);
                     waitIfPause();
                     sourceEventListener.onEvent(map, null);
                 }
             }
         } catch (IOException e) {
-            log.error(" Connection Error in" + siddhiAppContext.getSiddhiAppString() , e);
+            log.error(" Connection Error in " + sourceEventListener.getStreamDefinition().getId() , e);
         }
     }
 

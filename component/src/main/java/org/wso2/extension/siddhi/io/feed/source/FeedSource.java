@@ -24,41 +24,50 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This is a sample class-level comment, explaining what the extension class does.
+ * The Source implementation of feed
  */
 
 @Extension(
         name = "feed",
         namespace = "source",
-        description = " can consume atom and rss feed entries ",
+        description = " The feed source allows user to make request and get feed entries from Rss(Atom and Rss) " +
+                "servers periodically. This source can consume both RSS and Atom type feed entries. ",
         parameters = {
                 @Parameter(name = Constants.URL,
                         description = "address of the feed end point",
                         type = DataType.STRING),
                 @Parameter(name = Constants.FEED_TYPE,
-                        description = " Rss or Atom",
+                        description = "Type of the feed. Acceptance parameters are Rss and Atom",
                         type = DataType.STRING),
                 @Parameter(name = Constants.REQUEST_INTERVAL,
                         description = "request interval in minutes",
+                        optional = true,
+                        defaultValue = Constants.DEFAULT_REQUEST_INTERVAL,
                         type = DataType.INT)
         },
         examples = {
                 @Example(
-                        syntax = " ",
-                        description = "  "
+                        syntax = "@App:name('test')\n" +
+                                "@source(type='feed',\n" +
+                                "url = 'http://feeds.bbci.co.uk/news/rss.xml',\n" +
+                                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false'),\n" +
+                                "request.interval = '15',\n" +
+                                "feed.type = 'rss')\n" +
+                                " define stream inputStream(title string, id string, updated string)",
+                        description = " This Query Shows how request to the http server and consume Rss feed entries " +
+                                "with in 15min "
                 )
         }
 )
 
-// for more information refer https://wso2.github.io/siddhi/documentation/siddhi-4.0/#sources
 public class FeedSource extends Source {
     Logger logger = Logger.getLogger(FeedSource.class);
     OptionHolder optionHolder;
     private URL url;
     private String type;
     private int requestInterval;
+    private String streamName;
     private FeedListener listener;
-    private SiddhiAppContext siddhiAppContext;
     private ScheduledFuture future;
     private SourceEventListener sourceEventListener;
     private ScheduledExecutorService scheduledExecutorService;
@@ -73,13 +82,13 @@ public class FeedSource extends Source {
         try {
             url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));
         } catch (MalformedURLException e) {
-            throw new SiddhiAppValidationException(" Url Error in siddhi stream " +
-                    siddhiAppContext.getSiddhiAppString());
+            throw new SiddhiAppValidationException(" Url format Error in siddhi stream " +
+                    sourceEventListener.getStreamDefinition().getId());
         }
+        this.streamName = sourceEventListener.getStreamDefinition().getId();
         this.type = validateType();
         this.requestInterval = validateRequestInterval();
         this.scheduledExecutorService = siddhiAppContext.getScheduledExecutorService();
-        this.siddhiAppContext = siddhiAppContext;
     }
 
     private String validateType() {
@@ -90,12 +99,14 @@ public class FeedSource extends Source {
         } else if (type.equals(Constants.ATOM)) {
             return type;
         } else {
-            throw new SiddhiAppValidationException("type error");
+            throw new SiddhiAppValidationException("Feed Type Validation error in "
+                    + sourceEventListener.getStreamDefinition().getId());
         }
     }
 
     private int validateRequestInterval() {
-        int requestInterval = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.REQUEST_INTERVAL));
+        int requestInterval = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.REQUEST_INTERVAL,
+                Constants.DEFAULT_REQUEST_INTERVAL));
         return requestInterval;
     }
 
@@ -108,7 +119,7 @@ public class FeedSource extends Source {
     @Override
     public void connect(ConnectionCallback connectionCallback) throws ConnectionUnavailableException {
         try {
-            listener = new FeedListener(sourceEventListener, url, type, siddhiAppContext);
+            listener = new FeedListener(sourceEventListener, url, type, streamName);
         } catch (IOException e) {
                 logger.info(e);
         }

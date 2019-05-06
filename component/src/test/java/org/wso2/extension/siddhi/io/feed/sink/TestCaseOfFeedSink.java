@@ -223,42 +223,6 @@ public class TestCaseOfFeedSink {
     public void sinkForValidation() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
-        log.info("                           FEED Sink Test                                            ");
-        log.info("-------------------------------------------------------------------------------------");
-
-        SiddhiManager siddhiManager = new SiddhiManager();
-
-        String siddhiApp = "@App:name('test') \n" +
-
-                "@Source(type='feed', \n" +
-                "feed.type = 'Atomm', \n" +
-                "url = '" + base + "', \n" +
-                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
-                " define stream outputStream(id string, published string, content string, title string);\n";
-
-        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
-        executionPlanRuntime.addCallback("outputStream", new StreamCallback() {
-            @Override
-            public void receive(Event[] events) {
-                EventPrinter.print(events);
-            }
-        });
-
-        InputHandler inputHandler = executionPlanRuntime.getInputHandler("outputStream");
-        executionPlanRuntime.start();
-
-        inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
-        inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
-
-
-        siddhiManager.shutdown();
-    }
-
-
-    @Test(expectedExceptions = SiddhiAppValidationException.class)
-    public void sinkForValidation2() throws InterruptedException {
-
-        log.info("-------------------------------------------------------------------------------------");
         log.info("                           FEED Url Malformed                                            ");
         log.info("-------------------------------------------------------------------------------------");
 
@@ -266,7 +230,7 @@ public class TestCaseOfFeedSink {
 
         String siddhiApp = "@App:name('test') \n" +
 
-                "@Source(type='feed', \n" +
+                "@Sink(type='feed', \n" +
                 "feed.type = 'Atomm', \n" +
                 "url = 'localhost.', \n" +
                 "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
@@ -288,6 +252,33 @@ public class TestCaseOfFeedSink {
 
 
         siddhiManager.shutdown();
+    }
+
+    @Test(expectedExceptions = SiddhiAppValidationException.class)
+    public void sinkValidationTest() throws InterruptedException {
+
+        log.info("-------------------------------------------------------------------------------------");
+        log.info("                             FEED Sink UPDATE Test                                   ");
+        log.info("-------------------------------------------------------------------------------------");
+
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        String siddhiApp = "@App:name('test') \n" +
+
+                "@sink(type='feed', \n" +
+                "url = '" + base + "', \n" +
+                "http.response.code = '204', \n" +
+                "atom.func = 'error value', \n" +
+                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
+                " define stream outputStream(content string, title string);\n";
+
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
+        executionPlanRuntime.addCallback("outputStream", new StreamCallback() {
+            @Override
+            public void receive(Event[] events) {
+                EventPrinter.print(events);
+            }
+        });
     }
 }
 

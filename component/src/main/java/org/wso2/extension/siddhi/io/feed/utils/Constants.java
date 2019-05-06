@@ -10,6 +10,7 @@ public class Constants {
     public static final String HTTP_CREATED = "201";
     public static final String HTTP_OK = "201";
     public static final String HTTP_RESPONSE_CODE = "http.response.code";
+    public static final String DEFAULT_REQUEST_INTERVAL = "20";
 
     private Constants() {}
 

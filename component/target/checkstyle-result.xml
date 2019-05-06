@@ -2,11 +2,12 @@
 <checkstyle version="6.11.2">
 <file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedSink.java">
 </file>
-<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/ResponseFaildException.java">
+<file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/exceptions/FeedErrorResponseException.java">
 </file>
 <file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java">
 </file>
 <file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java">
+<error line="12" column="8" severity="error" message="Unused import - org.wso2.siddhi.core.config.SiddhiAppContext." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
 </file>
 <file name="/home/dhanushka/Desktop/Feed/siddhi-io-feed/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/Constants.java">
 </file>
