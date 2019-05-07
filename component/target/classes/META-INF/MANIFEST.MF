@@ -1,0 +1,43 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1557207344224
+Build-Jdk: 1.8.0_201
+Built-By: dhanushka
+Bundle-Contributors: WSO2 Inc
+Bundle-Copyright: WSO2 Inc
+Bundle-Description: WSO2 is an open source application development softw
+ are company focused on providing service-orientedarchitecture solutions
+  for professional developers.
+Bundle-Developers: WSO2 Inc
+Bundle-DocURL: https://docs.wso2.com
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: siddhi-io-feed
+Bundle-SymbolicName: siddhi-io-feed
+Bundle-Vendor: WSO2 Inc
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+DynamicImport-Package: *
+Export-Package: org.wso2.extension.siddhi.io.feed.sink;version="1.0.0.SN
+ APSHOT";uses:="org.wso2.siddhi.annotation,org.wso2.siddhi.annotation.ut
+ il,org.wso2.siddhi.core.config,org.wso2.siddhi.core.exception,org.wso2.
+ siddhi.core.stream.output.sink,org.wso2.siddhi.core.util.config,org.wso
+ 2.siddhi.core.util.transport,org.wso2.siddhi.query.api.definition",org.
+ wso2.extension.siddhi.io.feed.sink.exceptions;version="1.0.0.SNAPSHOT",
+ org.wso2.extension.siddhi.io.feed.source;version="1.0.0.SNAPSHOT";uses:
+ ="org.wso2.siddhi.annotation,org.wso2.siddhi.annotation.util,org.wso2.s
+ iddhi.core.config,org.wso2.siddhi.core.exception,org.wso2.siddhi.core.s
+ tream.input.source,org.wso2.siddhi.core.util.config,org.wso2.siddhi.cor
+ e.util.transport",org.wso2.extension.siddhi.io.feed.utils;version="1.0.
+ 0.SNAPSHOT"
+Import-Package: org.wso2.siddhi.annotation;version="[4.0.0,5.0.0)",org.w
+ so2.siddhi.annotation.util;version="[4.0.0,5.0.0)",org.wso2.siddhi.core
+ .config;version="[4.0.0,5.0.0)",org.wso2.siddhi.core.exception;version=
+ "[4.0.0,5.0.0)",org.wso2.siddhi.core.stream.input.source;version="[4.0.
+ 0,5.0.0)",org.wso2.siddhi.core.stream.output.sink;version="[4.0.0,5.0.0
+ )",org.wso2.siddhi.core.util.config;version="[4.0.0,5.0.0)",org.wso2.si
+ ddhi.core.util.transport;version="[4.0.0,5.0.0)",org.wso2.siddhi.query.
+ api.definition;version="[4.0.0,5.0.0)",org.wso2.siddhi.query.api.except
+ ion;version="[4.0.0,5.0.0)",org.apache.log4j;version="[1.2,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+SCM-Revision: 9cfe9ddf57f775a579b3094d7d63f81d02ecd590
+Tool: Bnd-3.0.0.201509101326

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="10" passed="10">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Siddhi-Io-Feed-Test-Suite" duration-ms="77992" started-at="2019-05-07T05:34:22Z" finished-at="2019-05-07T05:35:40Z">
+    <groups>
+    </groups>
+    <test name="Siddhi-io-feed-tests" duration-ms="77992" started-at="2019-05-07T05:34:22Z" finished-at="2019-05-07T05:35:40Z">
+      <class name="org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource">
+        <test-method status="PASS" signature="sinkForValidation()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="sinkForValidation" duration-ms="25" started-at="2019-05-07T11:04:24Z" finished-at="2019-05-07T11:04:24Z">
+          <exception class="org.wso2.siddhi.query.api.exception.SiddhiAppValidationException">
+            <message>
+              <![CDATA[Error on 'test' @ Line: 5. Position: 61, near '@Source(type='feed', 
+feed.type = 'Atomm', 
+url = 'http://feeds.bbci.co.uk/news/rss.xml', 
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))'. Feed Type Validation error in outputStream Acceptance parameters are RSS & Atom]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.wso2.siddhi.query.api.exception.SiddhiAppValidationException: Error on 'test' @ Line: 5. Position: 61, near '@Source(type='feed', 
+feed.type = 'Atomm', 
+url = 'http://feeds.bbci.co.uk/news/rss.xml', 
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))'. Feed Type Validation error in outputStream Acceptance parameters are RSS & Atom
+	at org.wso2.extension.siddhi.io.feed.source.FeedSource.validateType(FeedSource.java:120)
+	at org.wso2.extension.siddhi.io.feed.source.FeedSource.init(FeedSource.java:106)
+	at org.wso2.siddhi.core.stream.input.source.Source.init(Source.java:71)
+	at org.wso2.siddhi.core.util.parser.helper.DefinitionParserHelper.addEventSource(DefinitionParserHelper.java:367)
+	at org.wso2.siddhi.core.util.SiddhiAppRuntimeBuilder.defineStream(SiddhiAppRuntimeBuilder.java:114)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.defineStreamDefinitions(SiddhiAppParser.java:318)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.parse(SiddhiAppParser.java:225)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:65)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:74)
+	at org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource.sinkForValidation(TestCaseOfFeedSource.java:178)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:281)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:75)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:121)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.wso2.siddhi.query.api.exception.SiddhiAppValidationException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sinkForValidation -->
+        <test-method status="PASS" signature="setEventArrivedFalse()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="setEventArrivedFalse" is-config="true" duration-ms="1" started-at="2019-05-07T11:04:24Z" finished-at="2019-05-07T11:04:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setEventArrivedFalse -->
+        <test-method status="PASS" signature="sinkForValidation2()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="sinkForValidation2" duration-ms="5" started-at="2019-05-07T11:04:24Z" finished-at="2019-05-07T11:04:24Z">
+          <exception class="org.wso2.siddhi.query.api.exception.SiddhiAppValidationException">
+            <message>
+              <![CDATA[Error on 'test' @ Line: 6. Position: 61, near '@Source(type='feed', 
+feed.type = 'Atom', 
+request.interval = '-1', 
+url = 'http://feeds.bbci.co.uk/news/rss.xml', 
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))'.  Error in outputStream validating request interval, Request interval accept only positive integers ]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.wso2.siddhi.query.api.exception.SiddhiAppValidationException: Error on 'test' @ Line: 6. Position: 61, near '@Source(type='feed', 
+feed.type = 'Atom', 
+request.interval = '-1', 
+url = 'http://feeds.bbci.co.uk/news/rss.xml', 
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))'.  Error in outputStream validating request interval, Request interval accept only positive integers 
+	at org.wso2.extension.siddhi.io.feed.source.FeedSource.validateRequestInterval(FeedSource.java:131)
+	at org.wso2.extension.siddhi.io.feed.source.FeedSource.init(FeedSource.java:107)
+	at org.wso2.siddhi.core.stream.input.source.Source.init(Source.java:71)
+	at org.wso2.siddhi.core.util.parser.helper.DefinitionParserHelper.addEventSource(DefinitionParserHelper.java:367)
+	at org.wso2.siddhi.core.util.SiddhiAppRuntimeBuilder.defineStream(SiddhiAppRuntimeBuilder.java:114)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.defineStreamDefinitions(SiddhiAppParser.java:318)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.parse(SiddhiAppParser.java:225)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:65)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:74)
+	at org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource.sinkForValidation2(TestCaseOfFeedSource.java:206)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:281)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:75)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:121)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.wso2.siddhi.query.api.exception.SiddhiAppValidationException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sinkForValidation2 -->
+        <test-method status="PASS" signature="sourceForAtom()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="sourceForAtom" duration-ms="5023" started-at="2019-05-07T11:04:24Z" finished-at="2019-05-07T11:04:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sourceForAtom -->
+        <test-method status="PASS" signature="setEventArrivedFalse()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="setEventArrivedFalse" is-config="true" duration-ms="0" started-at="2019-05-07T11:04:24Z" finished-at="2019-05-07T11:04:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setEventArrivedFalse -->
+        <test-method status="PASS" signature="setEventArrivedFalse()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="setEventArrivedFalse" is-config="true" duration-ms="0" started-at="2019-05-07T11:04:30Z" finished-at="2019-05-07T11:04:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setEventArrivedFalse -->
+        <test-method status="PASS" signature="sourceForPauseAndResume()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="sourceForPauseAndResume" duration-ms="66024" started-at="2019-05-07T11:04:30Z" finished-at="2019-05-07T11:05:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sourceForPauseAndResume -->
+        <test-method status="PASS" signature="setEventArrivedFalse()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="setEventArrivedFalse" is-config="true" duration-ms="1" started-at="2019-05-07T11:05:36Z" finished-at="2019-05-07T11:05:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setEventArrivedFalse -->
+        <test-method status="PASS" signature="sourceForRss()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="sourceForRss" duration-ms="4014" started-at="2019-05-07T11:05:36Z" finished-at="2019-05-07T11:05:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sourceForRss -->
+        <test-method status="PASS" signature="setEventArrivedFalse()[pri:0, instance:org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource@5731d3a]" name="setEventArrivedFalse" is-config="true" duration-ms="0" started-at="2019-05-07T11:05:40Z" finished-at="2019-05-07T11:05:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setEventArrivedFalse -->
+      </class> <!-- org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource -->
+      <class name="org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink">
+        <test-method status="PASS" signature="startServer()[pri:0, instance:org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink@4e642ee1]" name="startServer" is-config="true" duration-ms="615" started-at="2019-05-07T11:04:22Z" finished-at="2019-05-07T11:04:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startServer -->
+        <test-method status="PASS" signature="basicSink()[pri:0, instance:org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink@4e642ee1]" name="basicSink" duration-ms="2099" started-at="2019-05-07T11:04:22Z" finished-at="2019-05-07T11:04:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- basicSink -->
+        <test-method status="PASS" signature="sinkValidationTest()[pri:0, instance:org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink@4e642ee1]" name="sinkValidationTest" duration-ms="10" started-at="2019-05-07T11:04:24Z" finished-at="2019-05-07T11:04:24Z">
+          <exception class="org.wso2.siddhi.query.api.exception.SiddhiAppValidationException">
+            <message>
+              <![CDATA[Error on 'test' @ Line: 6. Position: 61, near '@sink(type='feed', 
+url = 'http://localhost:45113/news', 
+http.response.code = '204', 
+atom.func = 'error value', 
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))'.  Atom finction validation error  in outputStream. Acceptance parameters are 'create', 'delete', 'update']]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.wso2.siddhi.query.api.exception.SiddhiAppValidationException: Error on 'test' @ Line: 6. Position: 61, near '@sink(type='feed', 
+url = 'http://localhost:45113/news', 
+http.response.code = '204', 
+atom.func = 'error value', 
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))'.  Atom finction validation error  in outputStream. Acceptance parameters are 'create', 'delete', 'update'
+	at org.wso2.extension.siddhi.io.feed.sink.FeedSink.validateAtomFn(FeedSink.java:155)
+	at org.wso2.extension.siddhi.io.feed.sink.FeedSink.init(FeedSink.java:134)
+	at org.wso2.siddhi.core.stream.output.sink.Sink.init(Sink.java:90)
+	at org.wso2.siddhi.core.util.parser.helper.DefinitionParserHelper.addEventSink(DefinitionParserHelper.java:546)
+	at org.wso2.siddhi.core.util.SiddhiAppRuntimeBuilder.defineStream(SiddhiAppRuntimeBuilder.java:115)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.defineStreamDefinitions(SiddhiAppParser.java:318)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.parse(SiddhiAppParser.java:225)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:65)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:74)
+	at org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink.sinkValidationTest(TestCaseOfFeedSink.java:250)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:281)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:75)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:121)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.wso2.siddhi.query.api.exception.SiddhiAppValidationException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sinkValidationTest -->
+        <test-method status="PASS" signature="sinkForValidation()[pri:0, instance:org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink@4e642ee1]" name="sinkForValidation" duration-ms="5" started-at="2019-05-07T11:04:24Z" finished-at="2019-05-07T11:04:24Z">
+          <exception class="org.wso2.siddhi.query.api.exception.SiddhiAppValidationException">
+            <message>
+              <![CDATA[Error on 'test' @ Line: 5. Position: 61, near '@Sink(type='feed', 
+feed.type = 'Atomm', 
+url = 'localhost.', 
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))'. url error]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.wso2.siddhi.query.api.exception.SiddhiAppValidationException: Error on 'test' @ Line: 5. Position: 61, near '@Sink(type='feed', 
+feed.type = 'Atomm', 
+url = 'localhost.', 
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))'. url error
+	at org.wso2.extension.siddhi.io.feed.sink.FeedSink.init(FeedSink.java:126)
+	at org.wso2.siddhi.core.stream.output.sink.Sink.init(Sink.java:90)
+	at org.wso2.siddhi.core.util.parser.helper.DefinitionParserHelper.addEventSink(DefinitionParserHelper.java:546)
+	at org.wso2.siddhi.core.util.SiddhiAppRuntimeBuilder.defineStream(SiddhiAppRuntimeBuilder.java:115)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.defineStreamDefinitions(SiddhiAppParser.java:318)
+	at org.wso2.siddhi.core.util.parser.SiddhiAppParser.parse(SiddhiAppParser.java:225)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:65)
+	at org.wso2.siddhi.core.SiddhiManager.createSiddhiAppRuntime(SiddhiManager.java:74)
+	at org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink.sinkForValidation(TestCaseOfFeedSink.java:214)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:281)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:75)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:121)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.wso2.siddhi.query.api.exception.SiddhiAppValidationException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sinkForValidation -->
+        <test-method status="PASS" signature="sinkForUpdate()[pri:0, instance:org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink@4e642ee1]" name="sinkForUpdate" duration-ms="72" started-at="2019-05-07T11:04:24Z" depends-on-methods="org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink.basicSink" finished-at="2019-05-07T11:04:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sinkForUpdate -->
+        <test-method status="PASS" signature="sinkForDelete()[pri:0, instance:org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink@4e642ee1]" name="sinkForDelete" duration-ms="37" started-at="2019-05-07T11:04:24Z" depends-on-methods="org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink.sinkForUpdate" finished-at="2019-05-07T11:04:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sinkForDelete -->
+        <test-method status="PASS" signature="stopServer()[pri:0, instance:org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink@4e642ee1]" name="stopServer" is-config="true" duration-ms="4" started-at="2019-05-07T11:04:24Z" finished-at="2019-05-07T11:04:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- stopServer -->
+      </class> <!-- org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink -->
+    </test> <!-- Siddhi-io-feed-tests -->
+  </suite> <!-- Siddhi-Io-Feed-Test-Suite -->
+</testng-results>

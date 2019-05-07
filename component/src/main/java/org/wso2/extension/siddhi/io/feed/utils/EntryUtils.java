@@ -1,61 +1,35 @@
+/*
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.wso2.extension.siddhi.io.feed.utils;
 
-import org.apache.abdera.model.Document;
 import org.apache.abdera.model.Entry;
-import org.apache.abdera.model.Feed;
 import org.apache.abdera.model.Link;
-import org.apache.axiom.om.OMElement;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Locale;
 import java.util.Map;
 
 /**
- * This is a sample class-level comment, explaining what the extension class does.
+ * Utility static methods for entry operations
  */
 public class EntryUtils {
-    public static LinkedList<Entry> convertRss (Feed feed, Document doc) {
-        OMElement item = (OMElement) doc.getRoot();
-        Iterator itemValue = item.getFirstElement().getChildrenWithName(Constants.FEED_ITEM);
-        LinkedList<Entry> list = new LinkedList<>();
-        DateFormat format = new SimpleDateFormat(Constants.RSS_FEED_DATE_FORMAT, Locale.ENGLISH);
-        while (itemValue.hasNext()) {
-            Entry entry = feed.insertEntry();
-            OMElement omElement = (OMElement) itemValue.next();
-
-            Iterator titleValue = omElement.getChildrenWithName(Constants.FEED_TITLE);
-            OMElement title = (OMElement) titleValue.next();
-            entry.setTitle(title.getText());
-
-            Iterator dateValue = omElement.getChildrenWithName(Constants.FEED_PUBDATE);
-            OMElement updated = (OMElement) dateValue.next();
-            try {
-                Date date = format.parse(updated.getText());
-                entry.setUpdated(date);
-            } catch (ParseException e) {
-                //log.error();
-            }
-
-            Iterator idValue = omElement.getChildrenWithName(Constants.FEED_GUID);
-            OMElement guid = (OMElement) idValue.next();
-            entry.setId(guid.getText());
-
-            Iterator linkValue = omElement.getChildrenWithName(Constants.FEED_LINK);
-            OMElement link = (OMElement) linkValue.next();
-            entry.setBaseUri(link.getText());
-
-            list.add(entry);
-        }
-        return list;
-    }
-
     public static Map<String, String> entryToMap(Entry entry) {
         Map<String, String> map = new HashMap<>();
 

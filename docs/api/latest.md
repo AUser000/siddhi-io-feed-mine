@@ -23,7 +23,7 @@
     </tr>
     <tr>
         <td style="vertical-align: top">url</td>
-        <td style="vertical-align: top; word-wrap: break-word">address of the feed end point</td>
+        <td style="vertical-align: top; word-wrap: break-word">The feed end point url</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">No</td>
@@ -31,7 +31,7 @@
     </tr>
     <tr>
         <td style="vertical-align: top">atom.func</td>
-        <td style="vertical-align: top; word-wrap: break-word">atom function of the request. Acceptance parameters are 'create', 'delete', 'update'</td>
+        <td style="vertical-align: top; word-wrap: break-word">Atom function of the request. Acceptance parameters are 'create', 'delete', 'update'</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">STRING</td>
         <td style="vertical-align: top">No</td>
@@ -55,7 +55,7 @@
     </tr>
     <tr>
         <td style="vertical-align: top">http.response.code</td>
-        <td style="vertical-align: top; word-wrap: break-word">response code for http</td>
+        <td style="vertical-align: top; word-wrap: break-word">Http response code</td>
         <td style="vertical-align: top">201</td>
         <td style="vertical-align: top">INT</td>
         <td style="vertical-align: top">Yes</td>
@@ -66,9 +66,13 @@
 <span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span>
 ```
- 
+@App:name('test')n@sink(type='feed',
+url = 'localhost:8080/news',
+http.response.code = '202',
+@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))
+ define stream outputStream(content string, title string);
 ```
-<p style="word-wrap: break-word"> support atom only</p>
+<p style="word-wrap: break-word"> This example shows how to create Atom entry on existing atom document</p>
 
 ## Source
 

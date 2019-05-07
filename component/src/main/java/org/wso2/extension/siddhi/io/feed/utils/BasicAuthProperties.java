@@ -1,7 +1,7 @@
 package org.wso2.extension.siddhi.io.feed.utils;
 
 /**
- * This is a sample class-level comment, explaining what the extension class does.
+ * This class keeps basic auth username, password etc.
  */
 public class BasicAuthProperties {
     private String userName;

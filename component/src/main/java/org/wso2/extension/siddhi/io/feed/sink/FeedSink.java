@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.wso2.extension.siddhi.io.feed.sink;
 
 import org.apache.abdera.Abdera;
@@ -42,10 +60,10 @@ import java.util.Map;
         description = "The feed sink allows to publish atom feed entries to atom implemented http servers ",
         parameters = {
                 @Parameter(name = Constants.URL,
-                        description = "address of the feed end point",
+                        description = "The feed end point url",
                         type = DataType.STRING),
                 @Parameter(name = Constants.ATOM_FUNC,
-                        description = "atom function of the request. " +
+                        description = "Atom function of the request. " +
                                 "Acceptance parameters are 'create', 'delete', 'update'",
                         type = DataType.STRING),
                 @Parameter(name = Constants.USERNAME,
@@ -59,15 +77,20 @@ import java.util.Map;
                         defaultValue = Constants.CREDENTIALS,
                         type = DataType.INT),
                 @Parameter(name = Constants.HTTP_RESPONSE_CODE,
-                        description = "response code for http",
+                        description = "Http response code",
                         optional = true,
                         defaultValue = Constants.HTTP_CREATED,
                         type = DataType.INT)
         },
         examples = {
                 @Example(
-                        syntax = " ",
-                        description = " support atom only"
+                        syntax = "@App:name('test')n" +
+                                "@sink(type='feed',\n" +
+                                "url = 'localhost:8080/news',\n" +
+                                "http.response.code = '202',\n" +
+                                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))\n" +
+                                " define stream outputStream(content string, title string);",
+                        description = " This example shows how to create Atom entry on existing atom document"
                 )
         }
 )

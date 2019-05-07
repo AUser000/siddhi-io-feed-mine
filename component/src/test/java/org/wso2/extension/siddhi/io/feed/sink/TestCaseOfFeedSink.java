@@ -1,6 +1,23 @@
+/*
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.wso2.extension.siddhi.io.feed.sink;
 
-import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Document;
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
@@ -27,9 +44,7 @@ import java.util.Date;
 public class TestCaseOfFeedSink {
     private Logger log = Logger.getLogger(TestCaseOfFeedSource.class.getName());
     private static JettyServer server;
-    private static Abdera abdera = Abdera.getInstance();
     private static AbderaClient client = new AbderaClient();
-
     private static String base;
 
     @BeforeClass
@@ -49,7 +64,7 @@ public class TestCaseOfFeedSink {
     public void basicSink() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
-        log.info("                           FEED Create Sink Test                               ");
+        log.info("                           FEED Create for Sink Test                                 ");
         log.info("-------------------------------------------------------------------------------------");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -84,14 +99,13 @@ public class TestCaseOfFeedSink {
         Feed feed = feedDoc.getRoot();
         Entry entry = feed.getEntries().get(0);
         Assert.assertTrue("Content".equals(entry.getContent()));
-
     }
 
     @Test(dependsOnMethods = "basicSink")
     public void sinkForUpdate() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
-        log.info("                             FEED Sink UPDATE Test                                   ");
+        log.info("                             FEED Sink for UPDATE Test                               ");
         log.info("-------------------------------------------------------------------------------------");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -100,7 +114,6 @@ public class TestCaseOfFeedSink {
         Document<Feed> feedDoc = resp.getDocument();
         Feed feed = feedDoc.getRoot();
         Entry entry = feed.getEntries().get(1);
-
         String editLink = entry.getEditLinkResolvedHref().toString();
         resp.release();
 
@@ -123,15 +136,12 @@ public class TestCaseOfFeedSink {
 
         InputHandler inputHandler = executionPlanRuntime.getInputHandler("outputStream");
         executionPlanRuntime.start();
-
         inputHandler.send(new Object[]{"XXXXXXX", "AAAAAA"});
         siddhiManager.shutdown();
-
         resp = client.get(base);
         feedDoc = resp.getDocument();
         feed = feedDoc.getRoot();
         Entry entry1 = feed.getEntries().get(1);
-
         Assert.assertTrue(entry1.getTitle().equals("AAAAAA"));
     }
 
@@ -139,7 +149,7 @@ public class TestCaseOfFeedSink {
     public void sinkForDelete() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
-        log.info("                           FEED Sink DELETE Test                               ");
+        log.info("                           FEED Sink for DELETE Test                                 ");
         log.info("-------------------------------------------------------------------------------------");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -184,46 +194,11 @@ public class TestCaseOfFeedSink {
         resp.release();
     }
 
-
-    @Test(enabled = false)
-    public void sinkForHTTPS() throws InterruptedException {
-
-        log.info("-------------------------------------------------------------------------------------");
-        log.info("                           FEED Sink Test                                            ");
-        log.info("-------------------------------------------------------------------------------------");
-
-        SiddhiManager siddhiManager = new SiddhiManager();
-
-        String siddhiApp = "@App:name('test') \n" +
-
-                "@sink(type='feed', \n" +
-                "url = '" + base + "', \n" +
-                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
-                " define stream outputStream(id string, published string, content string, title string);\n";
-
-        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
-        executionPlanRuntime.addCallback("outputStream", new StreamCallback() {
-            @Override
-            public void receive(Event[] events) {
-                EventPrinter.print(events);
-            }
-        });
-
-        InputHandler inputHandler = executionPlanRuntime.getInputHandler("outputStream");
-        executionPlanRuntime.start();
-
-        inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
-        inputHandler.send(new Object[]{"feed/entries/1", new Date(), "name", "hello"});
-
-
-        siddhiManager.shutdown();
-    }
-
     @Test(expectedExceptions = SiddhiAppValidationException.class)
     public void sinkForValidation() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
-        log.info("                           FEED Url Malformed                                            ");
+        log.info("                           FEED sink for Url Malformed Exception Test                ");
         log.info("-------------------------------------------------------------------------------------");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -258,7 +233,7 @@ public class TestCaseOfFeedSink {
     public void sinkValidationTest() throws InterruptedException {
 
         log.info("-------------------------------------------------------------------------------------");
-        log.info("                             FEED Sink UPDATE Test                                   ");
+        log.info("                  FEED Sink for atom function validation Test                        ");
         log.info("-------------------------------------------------------------------------------------");
 
         SiddhiManager siddhiManager = new SiddhiManager();

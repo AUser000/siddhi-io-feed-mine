@@ -138,12 +138,17 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Export-Package>
-                            org.wso2.extension.siddhi.io.feed,
-                            org.wso2.extension.siddhi.io.feed.*
+                            org.wso2.extension.siddhi.io.feed.*; version="${project.version}"
                         </Export-Package>
                         <Import-Package>
-                            *;resolution:=optional
+                            org.wso2.siddhi.annotation.*;version="${siddhi.version.range}",
+                            org.wso2.siddhi.core.*;version="${siddhi.version.range}",
+                            org.wso2.siddhi.query.*;version="${siddhi.version.range}",
+                            org.apache.log4j
                         </Import-Package>
+                        <Private-Package>
+                            org.apache.abdera.*;
+                        </Private-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
                         <Include-Resource>
                             META-INF=target/classes/META-INF

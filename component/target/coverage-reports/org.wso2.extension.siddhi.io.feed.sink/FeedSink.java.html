@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FeedSink.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Siddhi io feed extension</a> &gt; <a href="index.source.html" class="el_package">org.wso2.extension.siddhi.io.feed.sink</a> &gt; <span class="el_source">FeedSink.java</span></div><h1>FeedSink.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the &quot;License&quot;); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+package org.wso2.extension.siddhi.io.feed.sink;
+
+import org.apache.abdera.Abdera;
+import org.apache.abdera.model.Document;
+import org.apache.abdera.model.Entry;
+import org.apache.abdera.protocol.client.AbderaClient;
+import org.apache.abdera.protocol.client.ClientResponse;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.log4j.Logger;
+import org.wso2.extension.siddhi.io.feed.sink.exceptions.FeedErrorResponseException;
+import org.wso2.extension.siddhi.io.feed.utils.BasicAuthProperties;
+import org.wso2.extension.siddhi.io.feed.utils.Constants;
+import org.wso2.extension.siddhi.io.feed.utils.EntryUtils;
+import org.wso2.siddhi.annotation.Example;
+import org.wso2.siddhi.annotation.Extension;
+import org.wso2.siddhi.annotation.Parameter;
+import org.wso2.siddhi.annotation.util.DataType;
+import org.wso2.siddhi.core.config.SiddhiAppContext;
+import org.wso2.siddhi.core.exception.ConnectionUnavailableException;
+import org.wso2.siddhi.core.stream.output.sink.Sink;
+import org.wso2.siddhi.core.util.config.ConfigReader;
+import org.wso2.siddhi.core.util.transport.DynamicOptions;
+import org.wso2.siddhi.core.util.transport.OptionHolder;
+import org.wso2.siddhi.query.api.definition.StreamDefinition;
+import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
+
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * This is a sample class-level comment, explaining what the extension class does.
+ */
+
+@Extension(
+        name = &quot;feed&quot;,
+        namespace = &quot;sink&quot;,
+        description = &quot;The feed sink allows to publish atom feed entries to atom implemented http servers &quot;,
+        parameters = {
+                @Parameter(name = Constants.URL,
+                        description = &quot;The feed end point url&quot;,
+                        type = DataType.STRING),
+                @Parameter(name = Constants.ATOM_FUNC,
+                        description = &quot;Atom function of the request. &quot; +
+                                &quot;Acceptance parameters are 'create', 'delete', 'update'&quot;,
+                        type = DataType.STRING),
+                @Parameter(name = Constants.USERNAME,
+                        description = &quot;User name of the basic auth&quot;,
+                        optional = true,
+                        defaultValue = Constants.CREDENTIALS,
+                        type = DataType.STRING),
+                @Parameter(name = Constants.PASSWORD,
+                        description = &quot;Password of the basic auth&quot;,
+                        optional = true,
+                        defaultValue = Constants.CREDENTIALS,
+                        type = DataType.INT),
+                @Parameter(name = Constants.HTTP_RESPONSE_CODE,
+                        description = &quot;Http response code&quot;,
+                        optional = true,
+                        defaultValue = Constants.HTTP_CREATED,
+                        type = DataType.INT)
+        },
+        examples = {
+                @Example(
+                        syntax = &quot;@App:name('test')n&quot; +
+                                &quot;@sink(type='feed',\n&quot; +
+                                &quot;url = 'localhost:8080/news',\n&quot; +
+                                &quot;http.response.code = '202',\n&quot; +
+                                &quot;@map(type = 'keyvalue', fail.on.missing.attribute = 'false'))\n&quot; +
+                                &quot; define stream outputStream(content string, title string);&quot;,
+                        description = &quot; This example shows how to create Atom entry on existing atom document&quot;
+                )
+        }
+)
+
+<span class="fc" id="L98">public class FeedSink extends Sink {</span>
+<span class="fc" id="L99">    private static final Logger log = Logger.getLogger(FeedSink.class);</span>
+    private OptionHolder optionHolder;
+    private URL url;
+    private BasicAuthProperties authProperties;
+    private Abdera abdera;
+    private AbderaClient abderaClient;
+    private int httpResponse;
+    private String atomFunc;
+    private StreamDefinition streamDefinition;
+
+    @Override
+    public Class[] getSupportedInputEventClasses() {
+<span class="fc" id="L111">            return new Class[]{Map.class};</span>
+    }
+
+    @Override
+    public String[] getSupportedDynamicOptions() {
+<span class="fc" id="L116">            return new String[0];</span>
+    }
+
+    @Override
+    protected void init(StreamDefinition streamDefinition, OptionHolder optionHolder, ConfigReader configReader,
+            SiddhiAppContext siddhiAppContext) {
+<span class="fc" id="L122">        this.optionHolder = optionHolder;</span>
+        try {
+<span class="fc" id="L124">            url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));</span>
+<span class="fc" id="L125">        } catch (MalformedURLException e) {</span>
+<span class="fc" id="L126">            throw new SiddhiAppValidationException(&quot;url error&quot;);</span>
+<span class="fc" id="L127">        }</span>
+<span class="fc" id="L128">        authProperties = validateCredentials();</span>
+<span class="fc" id="L129">        this.streamDefinition = streamDefinition;</span>
+<span class="fc" id="L130">        abdera = new Abdera();</span>
+<span class="fc" id="L131">        abderaClient = new AbderaClient(abdera);</span>
+<span class="fc" id="L132">        httpResponse = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.HTTP_RESPONSE_CODE,</span>
+                Constants.HTTP_CREATED));
+<span class="fc" id="L134">        atomFunc = validateAtomFn(optionHolder.validateAndGetStaticValue(Constants.ATOM_FUNC, Constants.FEED_CREATE));</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (authProperties.isEnable()) {</span>
+<span class="nc" id="L136">            abderaClient.registerTrustManager();</span>
+            try {
+<span class="nc" id="L138">                abderaClient.addCredentials(String.valueOf(url),</span>
+                        &quot;realm&quot;,
+                        &quot;basic&quot;,
+<span class="nc" id="L141">                        new UsernamePasswordCredentials(authProperties.getUserName(), authProperties.getUserPass()));</span>
+<span class="nc" id="L142">            } catch (URISyntaxException e) {</span>
+<span class="nc" id="L143">                log.info(&quot; &quot; , e);</span>
+<span class="nc" id="L144">            }</span>
+        }
+<span class="fc" id="L146">    }</span>
+
+    private String validateAtomFn(String atomFunc) {
+<span class="fc" id="L149">        atomFunc = atomFunc.toLowerCase(Locale.ENGLISH);</span>
+<span class="pc bpc" id="L150" title="3 of 14 branches missed.">        switch (atomFunc) {</span>
+<span class="fc" id="L151">            case Constants.FEED_CREATE : return atomFunc;</span>
+<span class="fc" id="L152">            case Constants.FEED_DELETE : return atomFunc;</span>
+<span class="fc" id="L153">            case Constants.FEED_UPDATE : return atomFunc;</span>
+<span class="fc" id="L154">            default : throw new SiddhiAppValidationException(&quot; Atom finction validation error  in &quot;</span>
+<span class="fc" id="L155">                    + streamDefinition.getId() + &quot;. Acceptance parameters are 'create', 'delete', 'update'&quot;);</span>
+        }
+    }
+
+    private BasicAuthProperties validateCredentials() {
+<span class="fc" id="L160">        BasicAuthProperties properties = new BasicAuthProperties();</span>
+<span class="fc" id="L161">        if (!optionHolder.validateAndGetStaticValue(</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">                Constants.USERNAME, Constants.CREDENTIALS).equals(Constants.CREDENTIALS) ||</span>
+<span class="fc" id="L163">                !optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS)</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">                        .equals(Constants.CREDENTIALS)) {</span>
+<span class="nc" id="L165">            properties.setEnable(true);</span>
+<span class="nc" id="L166">            properties.setUserName(optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS));</span>
+<span class="nc" id="L167">            properties.setUserPass(optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS));</span>
+        }
+<span class="fc" id="L169">        return properties;</span>
+    }
+
+
+    @Override
+    public void publish(Object payload, DynamicOptions dynamicOptions) throws ConnectionUnavailableException {
+<span class="fc" id="L175">        HashMap map = (HashMap) payload;</span>
+<span class="fc" id="L176">        ClientResponse resp = null;</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (atomFunc.equals(Constants.FEED_CREATE)) {</span>
+<span class="fc" id="L178">            Entry entry = abdera.newEntry();</span>
+<span class="fc" id="L179">            entry = EntryUtils.createEntry(map, entry);</span>
+<span class="fc" id="L180">            entry.setPublished(new Date());</span>
+<span class="fc" id="L181">            resp = abderaClient.post(url.toString() , entry);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        } else if (atomFunc.equals(Constants.FEED_DELETE)) {</span>
+<span class="fc" id="L183">            resp = abderaClient.delete((String) map.get(&quot;id&quot;));</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        } else if (atomFunc.equals(Constants.FEED_UPDATE)) {</span>
+<span class="fc" id="L185">            resp = abderaClient.get(url.toString());</span>
+<span class="fc" id="L186">            Document&lt;Entry&gt; doc = resp.getDocument();</span>
+<span class="fc" id="L187">            Entry entry = doc.getRoot();</span>
+<span class="fc" id="L188">            entry =  EntryUtils.createEntry(map, entry);</span>
+<span class="fc" id="L189">            resp = abderaClient.put(url.toString(), entry);</span>
+        }
+
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">        if (resp != null) {</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">            if (resp.getStatus() != httpResponse) {</span>
+<span class="nc" id="L194">                throw new FeedErrorResponseException(&quot;Response status conflicts response status code is :&quot; +</span>
+<span class="nc" id="L195">                        resp.getStatus() + &quot;-&quot; + resp.getStatusText());</span>
+            }
+<span class="fc" id="L197">            resp.release();</span>
+        }
+<span class="fc" id="L199">    }</span>
+
+    @Override
+    public void connect() throws ConnectionUnavailableException {
+
+<span class="fc" id="L204">    }</span>
+
+    @Override
+    public void disconnect() {
+
+<span class="fc" id="L209">    }</span>
+
+    @Override
+    public void destroy() {
+<span class="fc" id="L213">        abderaClient.clearCredentials();</span>
+<span class="fc" id="L214">    }</span>
+
+    @Override
+    public Map&lt;String, Object&gt; currentState() {
+<span class="nc" id="L218">            return null;</span>
+    }
+
+    @Override
+    public void restoreState(Map&lt;String, Object&gt; map) {
+
+<span class="nc" id="L224">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

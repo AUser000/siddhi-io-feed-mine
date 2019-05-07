@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.wso2.extension.siddhi.io.feed.source;
 
 import org.apache.log4j.Logger;
@@ -85,7 +103,6 @@ public class FeedSource extends Source {
             throw new SiddhiAppValidationException(" Url format Error in siddhi stream " +
                     sourceEventListener.getStreamDefinition().getId());
         }
-        this.streamName = sourceEventListener.getStreamDefinition().getId();
         this.type = validateType();
         this.requestInterval = validateRequestInterval();
         this.scheduledExecutorService = siddhiAppContext.getScheduledExecutorService();
@@ -100,14 +117,24 @@ public class FeedSource extends Source {
             return type;
         } else {
             throw new SiddhiAppValidationException("Feed Type Validation error in "
-                    + sourceEventListener.getStreamDefinition().getId());
+                    + sourceEventListener.getStreamDefinition().getId() + " Acceptance parameters are RSS & Atom");
         }
     }
 
     private int validateRequestInterval() {
-        int requestInterval = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.REQUEST_INTERVAL,
-                Constants.DEFAULT_REQUEST_INTERVAL));
-        return requestInterval;
+        try {
+            int requestInterval = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.REQUEST_INTERVAL,
+                    Constants.DEFAULT_REQUEST_INTERVAL));
+            if (requestInterval > 0) {
+                return requestInterval;
+            } else {
+                throw new SiddhiAppValidationException(" Error in " + sourceEventListener.getStreamDefinition().getId()
+                        + " validating request interval, Request interval accept only positive integers ");
+            }
+        } catch (NumberFormatException e) {
+            throw new SiddhiAppValidationException(" Error in " + sourceEventListener.getStreamDefinition().getId()
+                    + " validating request interval, Request interval accept only positive integers ");
+        }
     }
 
 
@@ -119,7 +146,7 @@ public class FeedSource extends Source {
     @Override
     public void connect(ConnectionCallback connectionCallback) throws ConnectionUnavailableException {
         try {
-            listener = new FeedListener(sourceEventListener, url, type, streamName);
+            listener = new FeedListener(sourceEventListener, url, type);
         } catch (IOException e) {
                 logger.info(e);
         }
