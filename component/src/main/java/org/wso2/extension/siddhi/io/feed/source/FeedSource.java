@@ -32,7 +32,6 @@ import org.wso2.siddhi.core.util.config.ConfigReader;
 import org.wso2.siddhi.core.util.transport.OptionHolder;
 import org.wso2.siddhi.query.api.exception.SiddhiAppValidationException;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
@@ -145,11 +144,7 @@ public class FeedSource extends Source {
 
     @Override
     public void connect(ConnectionCallback connectionCallback) throws ConnectionUnavailableException {
-        try {
-            listener = new FeedListener(sourceEventListener, url, type);
-        } catch (IOException e) {
-                logger.info(e);
-        }
+        listener = new FeedListener(sourceEventListener, url, type);
         future = scheduledExecutorService.scheduleAtFixedRate(listener, 0, requestInterval, TimeUnit.MINUTES);
     }
 
@@ -160,8 +155,12 @@ public class FeedSource extends Source {
 
     @Override
     public void destroy() {
-        future.cancel(true);
-        scheduledExecutorService.shutdown();
+        if (future != null) {
+            future.cancel(true);
+        }
+        if (scheduledExecutorService != null) {
+            scheduledExecutorService.shutdown();
+        }
     }
 
     @Override

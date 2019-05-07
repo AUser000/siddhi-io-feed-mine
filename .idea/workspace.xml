@@ -5,26 +5,60 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="990dddf7-8c38-47b0-8e14-787c93556b79" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_abdera_abdera_client_1_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__asm_asm_3_3_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_7_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_7_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_7_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jaxen_jaxen_1_1_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_asm_1_0_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_wso2_extension_siddhi_map_json_siddhi_map_json_4_0_15.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_wso2_extension_siddhi_map_text_siddhi_map_text_1_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_wso2_extension_siddhi_map_xml_siddhi_map_xml_4_0_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_wso2_orbit_org_apache_tapestry_tapestry_json_5_4_1_wso2v1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/.attach_pid10392" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/component/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedSink.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedSink.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/exceptions/FeedErrorResponseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/exceptions/FeedErrorResponseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/siddhi-io-feed.iml" beforeDir="false" afterPath="$PROJECT_DIR$/component/siddhi-io-feed.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/BasicAuthProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/BasicAuthProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/EntryUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/EntryUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/sink/TestCaseOfFeedSink.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/sink/TestCaseOfFeedSink.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/JettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/JettyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/News.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/News.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/PortAllocator.java" beforeDir="false" afterPath="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/PortAllocator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/component/target/checkstyle-cachefile" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/checkstyle-cachefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/target/checkstyle-result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/checkstyle-result.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/api/1.0.0-SNAPSHOT.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/1.0.0-SNAPSHOT.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/classes/META-INF/DEPENDENCIES" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/classes/META-INF/DEPENDENCIES" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/classes/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/classes/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/classes/org/wso2/extension/siddhi/io/feed/source/FeedListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/classes/org/wso2/extension/siddhi/io/feed/source/FeedListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/classes/org/wso2/extension/siddhi/io/feed/source/FeedSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/classes/org/wso2/extension/siddhi/io/feed/source/FeedSource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/jacoco-sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/jacoco-sessions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/jacoco.csv" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/jacoco.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/jacoco.exec" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/jacoco.exec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/jacoco.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/jacoco.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/FeedListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/FeedListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/FeedListener.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/FeedListener.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/FeedSource.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/FeedSource.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/FeedSource.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/FeedSource.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/coverage-reports/org.wso2.extension.siddhi.io.feed.source/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/findbugs/findbugsXml.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/findbugs/findbugsXml.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/maven-shared-archive-resources/META-INF/DEPENDENCIES" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/maven-shared-archive-resources/META-INF/DEPENDENCIES" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/siddhi-io-feed-1.0.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/Siddhi-Io-Feed-Test-Suite/Siddhi-io-feed-tests.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/Siddhi-Io-Feed-Test-Suite/Siddhi-io-feed-tests.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/Siddhi-Io-Feed-Test-Suite/Siddhi-io-feed-tests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/Siddhi-Io-Feed-Test-Suite/Siddhi-io-feed-tests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/TEST-TestSuite.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/TEST-TestSuite.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/TestSuite.txt" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/TestSuite.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/emailable-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/emailable-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/junitreports/TEST-org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/junitreports/TEST-org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/junitreports/TEST-org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/junitreports/TEST-org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/old/Siddhi-Io-Feed-Test-Suite/methods-alphabetical.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/old/Siddhi-Io-Feed-Test-Suite/methods-alphabetical.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/old/Siddhi-Io-Feed-Test-Suite/methods.html" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/old/Siddhi-Io-Feed-Test-Suite/methods.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/surefire-reports/testng-results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/surefire-reports/testng-results.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/test-classes/META-INF/DEPENDENCIES" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/test-classes/META-INF/DEPENDENCIES" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/component/target/test-classes/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/api/latest.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/latest.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/checkstyle-cachefile" beforeDir="false" afterPath="$PROJECT_DIR$/target/checkstyle-cachefile" afterDir="false" />
@@ -50,13 +84,40 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedSink.java">
+        <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="137" column="62" selection-start-line="137" selection-start-column="59" selection-end-line="137" selection-end-column="62" />
+            <state relative-caret-position="544">
+              <caret line="94" column="58" selection-start-line="94" selection-start-column="58" selection-end-line="94" selection-end-column="58" />
               <folding>
-                <element signature="e#0#9253#0" expanded="true" />
                 <element signature="imports" expanded="true" />
+                <element signature="e#4405#4406#0" expanded="true" />
+                <element signature="e#4434#4435#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/net/URLConnection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="828" column="22" selection-start-line="828" selection-start-column="11" selection-end-line="828" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="104" column="35" selection-start-line="104" selection-start-column="35" selection-end-line="104" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6244#6245#0" expanded="true" />
+                <element signature="e#6290#6291#0" expanded="true" />
+                <element signature="e#6921#6922#0" expanded="true" />
+                <element signature="e#6996#6997#0" expanded="true" />
+                <element signature="e#7086#7087#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,8 +126,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2776">
-              <caret line="173" column="38" selection-start-line="173" selection-start-column="38" selection-end-line="173" selection-end-column="38" />
+            <state relative-caret-position="322">
+              <caret line="157" column="67" selection-start-line="157" selection-start-column="67" selection-end-line="157" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/JettyServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-75">
+              <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -74,51 +147,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="83" selection-start-line="83" selection-end-line="83" />
+            <state relative-caret-position="-853">
+              <caret line="119" column="10" selection-start-line="119" selection-start-column="10" selection-end-line="119" selection-end-column="10" />
               <folding>
-                <element signature="e#0#9093#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mkdocs.yml">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/component/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="145" column="36" selection-start-line="145" selection-start-column="36" selection-end-line="145" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/EntryUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#2789#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/Constants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="66" column="6" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
-              <folding>
-                <element signature="e#0#2627#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="225">
+              <caret line="136" column="61" selection-start-line="136" selection-start-column="61" selection-end-line="136" selection-end-column="61" />
             </state>
           </provider>
         </entry>
@@ -126,10 +168,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/sink/TestCaseOfFeedSink.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="234" column="93" selection-start-line="234" selection-start-column="93" selection-end-line="234" selection-end-column="93" />
+            <state relative-caret-position="-757">
+              <caret line="54" column="41" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
               <folding>
-                <element signature="e#0#12605#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
@@ -137,38 +178,20 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/BasicAuthProperties.java">
+        <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+            <state relative-caret-position="697">
+              <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
               <folding>
-                <element signature="e#305#306#0" expanded="true" />
-                <element signature="e#336#337#0" expanded="true" />
-                <element signature="e#384#385#0" expanded="true" />
-                <element signature="e#424#425#0" expanded="true" />
-                <element signature="e#459#460#0" expanded="true" />
-                <element signature="e#490#491#0" expanded="true" />
-                <element signature="e#538#539#0" expanded="true" />
-                <element signature="e#578#579#0" expanded="true" />
-                <element signature="e#611#612#0" expanded="true" />
-                <element signature="e#642#643#0" expanded="true" />
-                <element signature="e#687#688#0" expanded="true" />
-                <element signature="e#720#721#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/News.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#1197#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/component/siddhi-io-feed.iml">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -249,18 +272,18 @@
         <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedErrorResponseException.java" />
         <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/exceptions/FeedErrorResponseException.java" />
         <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedSink.java" />
-        <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java" />
-        <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java" />
         <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/BasicAuthProperties.java" />
         <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/EntryUtils.java" />
         <option value="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/JettyServer.java" />
         <option value="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/News.java" />
-        <option value="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.java" />
         <option value="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/PortAllocator.java" />
         <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/Constants.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/component/pom.xml" />
+        <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java" />
         <option value="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/sink/TestCaseOfFeedSink.java" />
+        <option value="$PROJECT_DIR$/component/pom.xml" />
+        <option value="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.java" />
+        <option value="$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.java" />
       </list>
     </option>
@@ -273,9 +296,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
+    <option name="x" value="992" />
     <option name="y" value="52" />
-    <option name="width" value="898" />
+    <option name="width" value="918" />
     <option name="height" value="1028" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -286,8 +309,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -429,25 +450,19 @@
               <item name="siddhi-io-feed-parent" type="b2602c69:ProjectViewProjectNode" />
               <item name="siddhi-io-feed" type="462c0819:PsiDirectoryNode" />
               <item name="component" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="siddhi-io-feed-parent" type="b2602c69:ProjectViewProjectNode" />
-              <item name="siddhi-io-feed" type="462c0819:PsiDirectoryNode" />
-              <item name="component" type="462c0819:PsiDirectoryNode" />
               <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557207442015" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557218964365" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../siddhi-io-snmp" />
     <property name="settings.editor.selected.configurable" value="org.infernus.idea.checkstyle.CheckStyleConfigurable" />
   </component>
@@ -485,54 +500,47 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="TestNG.TestCaseOfFeedSource.sourceForAtom">
-    <configuration name="TestCaseOfFeedSink.sinkForValidation" type="TestNG" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="TestNG.TestCaseOfFeedSink">
+    <configuration name="JettyServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.wso2.extension.siddhi.io.feed.utils.JettyServer" />
       <module name="siddhi-io-feed" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.wso2.extension.siddhi.io.feed.sink.exceptions.*" />
+          <option name="PATTERN" value="org.wso2.extension.siddhi.io.feed.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestCaseOfFeedSink" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="siddhi-io-feed" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.wso2.extension.siddhi.io.feed.sink.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.wso2.extension.siddhi.io.feed.sink" />
       <option name="MAIN_CLASS_NAME" value="org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink" />
-      <option name="METHOD_NAME" value="sinkForValidation" />
-      <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestCaseOfFeedSink.sinkValidationTest" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="TestCaseOfFeedSink.basicSink" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="siddhi-io-feed" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.wso2.extension.siddhi.io.feed.sink.exceptions.*" />
+          <option name="PATTERN" value="org.wso2.extension.siddhi.io.feed.sink.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.wso2.extension.siddhi.io.feed.sink" />
       <option name="MAIN_CLASS_NAME" value="org.wso2.extension.siddhi.io.feed.sink.TestCaseOfFeedSink" />
-      <option name="METHOD_NAME" value="sinkValidationTest" />
-      <option name="TEST_OBJECT" value="METHOD" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestCaseOfFeedSource.sinkForValidation2" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="siddhi-io-feed" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.wso2.extension.siddhi.io.feed.source.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.wso2.extension.siddhi.io.feed.source" />
-      <option name="MAIN_CLASS_NAME" value="org.wso2.extension.siddhi.io.feed.source.TestCaseOfFeedSource" />
-      <option name="METHOD_NAME" value="sinkForValidation2" />
+      <option name="METHOD_NAME" value="basicSink" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -578,11 +586,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.TestCaseOfFeedSink" />
+        <item itemvalue="TestNG.TestCaseOfFeedSink.basicSink" />
+        <item itemvalue="Application.JettyServer" />
         <item itemvalue="TestNG.TestCaseOfFeedSource.sourceForAtom" />
         <item itemvalue="TestNG.TestCaseOfFeedSource.sourceForRss" />
-        <item itemvalue="TestNG.TestCaseOfFeedSource.sinkForValidation2" />
-        <item itemvalue="TestNG.TestCaseOfFeedSink.sinkValidationTest" />
-        <item itemvalue="TestNG.TestCaseOfFeedSink.sinkForValidation" />
       </list>
     </recent_temporary>
   </component>
@@ -600,18 +608,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestCaseOfFeedSource_sourceForAtom - 2019.05.06 at 22h 34m 53s.xml">
-      <configuration name="TestCaseOfFeedSource.sourceForAtom" configurationId="TestNG" />
-    </history-entry>
-    <history-entry file="TestCaseOfFeedSource_sourceForRss - 2019.05.07 at 10h 01m 09s.xml">
-      <configuration name="TestCaseOfFeedSource.sourceForRss" configurationId="TestNG" />
-    </history-entry>
-    <history-entry file="TestCaseOfFeedSource_sourceForRss - 2019.05.07 at 10h 03m 40s.xml">
-      <configuration name="TestCaseOfFeedSource.sourceForRss" configurationId="TestNG" />
-    </history-entry>
-    <history-entry file="TestCaseOfFeedSource_sourceForRss - 2019.05.07 at 10h 03m 50s.xml">
-      <configuration name="TestCaseOfFeedSource.sourceForRss" configurationId="TestNG" />
-    </history-entry>
     <history-entry file="TestCaseOfFeedSource_sourceForRss - 2019.05.07 at 10h 18m 09s.xml">
       <configuration name="TestCaseOfFeedSource.sourceForRss" configurationId="TestNG" />
     </history-entry>
@@ -630,6 +626,18 @@
     <history-entry file="TestCaseOfFeedSource_sourceForAtom - 2019.05.07 at 11h 03m 35s.xml">
       <configuration name="TestCaseOfFeedSource.sourceForAtom" configurationId="TestNG" />
     </history-entry>
+    <history-entry file="TestCaseOfFeedSource_sourceForAtom - 2019.05.07 at 12h 43m 25s.xml">
+      <configuration name="TestCaseOfFeedSource.sourceForAtom" configurationId="TestNG" />
+    </history-entry>
+    <history-entry file="TestCaseOfFeedSink_basicSink - 2019.05.07 at 13h 25m 53s.xml">
+      <configuration name="TestCaseOfFeedSink.basicSink" configurationId="TestNG" />
+    </history-entry>
+    <history-entry file="TestCaseOfFeedSink_basicSink - 2019.05.07 at 13h 27m 25s.xml">
+      <configuration name="TestCaseOfFeedSink.basicSink" configurationId="TestNG" />
+    </history-entry>
+    <history-entry file="TestCaseOfFeedSink - 2019.05.07 at 13h 28m 26s.xml">
+      <configuration name="TestCaseOfFeedSink" configurationId="TestNG" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -643,7 +651,7 @@
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4986911" visible="true" weight="0.19855796" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4986911" visible="true" weight="0.27676097" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -652,14 +660,14 @@
       <window_info id="Favorites" order="6" sideWeight="0.5013089" side_tool="true" weight="0.29617304" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.62562394" weight="0.7004405" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.62562394" weight="0.22136565" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.46035242" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32929516" />
       <window_info anchor="bottom" id="CheckStyle" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.5638766" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.5803965" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.37437603" side_tool="true" weight="0.44713655" />
       <window_info anchor="bottom" id="FindBugs-IDEA" order="11" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32599118" />
@@ -715,14 +723,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1-sources.jar!/org/apache/commons/httpclient/Credentials.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="42" column="17" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/AbderaServer.java" />
     <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/EmployeeProviderServlet.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/abdera/abdera-server/1.1.3/abdera-server-1.1.3.jar!/org/apache/abdera/protocol/server/servlet/AbderaServlet.class">
       <provider selected="true" editor-type-id="text-editor">
@@ -859,33 +859,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#0#5000#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#4434#4435#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#0#7184#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#6290#6291#0" expanded="true" />
-            <element signature="e#6937#6938#0" expanded="true" />
-            <element signature="e#7012#7013#0" expanded="true" />
-            <element signature="e#7102#7103#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/exceptions/FeedErrorResponseException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -899,28 +872,6 @@
           <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
           <folding>
             <element signature="e#0#1123#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#5485#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/JettyServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="35" column="22" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#2556#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -957,9 +908,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedSink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1479">
+          <caret line="137" column="62" selection-start-line="137" selection-start-column="59" selection-end-line="137" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#9253#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mkdocs.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/EntryUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
+        <state relative-caret-position="153">
           <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
           <folding>
             <element signature="e#0#2789#0" expanded="true" />
@@ -971,47 +936,86 @@
     <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/utils/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
-          <caret line="66" column="6" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
+          <caret line="42" column="31" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/net/URLConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="828" column="22" selection-start-line="828" selection-start-column="11" selection-end-line="828" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/JettyServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-75">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
           <folding>
-            <element signature="e#0#2627#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/sink/FeedSink.java">
+    <entry file="file://$PROJECT_DIR$/component/siddhi-io-feed.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/component/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="137" column="62" selection-start-line="137" selection-start-column="59" selection-end-line="137" selection-end-column="62" />
+        <state relative-caret-position="225">
+          <caret line="136" column="61" selection-start-line="136" selection-start-column="61" selection-end-line="136" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
           <folding>
-            <element signature="e#0#9253#0" expanded="true" />
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="104" column="35" selection-start-line="104" selection-start-column="35" selection-end-line="104" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6244#6245#0" expanded="true" />
+            <element signature="e#6290#6291#0" expanded="true" />
+            <element signature="e#6921#6922#0" expanded="true" />
+            <element signature="e#6996#6997#0" expanded="true" />
+            <element signature="e#7086#7087#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/component/src/main/java/org/wso2/extension/siddhi/io/feed/source/FeedListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="94" column="58" selection-start-line="94" selection-start-column="58" selection-end-line="94" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4405#4406#0" expanded="true" />
+            <element signature="e#4434#4435#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2776">
-          <caret line="173" column="38" selection-start-line="173" selection-start-column="38" selection-end-line="173" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mkdocs.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/component/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="145" column="36" selection-start-line="145" selection-start-column="36" selection-end-line="145" selection-end-column="36" />
+        <state relative-caret-position="322">
+          <caret line="157" column="67" selection-start-line="157" selection-start-column="67" selection-end-line="157" selection-end-column="67" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/sink/TestCaseOfFeedSink.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="234" column="93" selection-start-line="234" selection-start-column="93" selection-end-line="234" selection-end-column="93" />
+        <state relative-caret-position="-757">
+          <caret line="54" column="41" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
           <folding>
-            <element signature="e#0#12605#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -1019,10 +1023,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/component/src/test/java/org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="83" selection-start-line="83" selection-end-line="83" />
+        <state relative-caret-position="-853">
+          <caret line="119" column="10" selection-start-line="119" selection-start-column="10" selection-end-line="119" selection-end-column="10" />
           <folding>
-            <element signature="e#0#9093#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>

@@ -64,6 +64,7 @@ public class TestCaseOfFeedSource {
                 "@source(type='feed', \n" +
                 "url = 'https://wso2.org/jenkins/job/siddhi/job/siddhi-io-tcp/rssAll', \n" +
                 "@map(type = 'keyvalue', fail.on.missing.attribute = 'false'), \n" +
+                "request.interval = '1', \n" +
                 "feed.type = 'atom') \n" +
                 " define stream inputStream(link string, title string, id string, published string);\n";
 
@@ -116,9 +117,9 @@ public class TestCaseOfFeedSource {
         });
         executionPlanRuntime.start();
         Thread.sleep(5500);
-        eventArrived.set(false);
+        //eventArrived.set(false);
         sources.forEach(e -> e.forEach(Source::pause));
-        Thread.sleep(55000);
+        //Thread.sleep(55000);
         sources.forEach(e -> e.forEach(Source::resume));
         Thread.sleep(5500);
         siddhiManager.shutdown();

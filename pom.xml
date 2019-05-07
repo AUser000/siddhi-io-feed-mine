@@ -14,7 +14,7 @@
     </modules>
     <groupId>org.wso2.extension.siddhi.io.feed</groupId>
     <artifactId>siddhi-io-feed-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Siddhi I/O feed</name>
     <dependencyManagement>
         <dependencies>
@@ -76,24 +76,6 @@
                         <artifactId>jmxri</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.extension.siddhi.map.xml</groupId>
-                <artifactId>siddhi-map-xml</artifactId>
-                <version>${siddhi.map.xml.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.extension.siddhi.map.text</groupId>
-                <artifactId>siddhi-map-text</artifactId>
-                <version>${siddhi.map.text.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.extension.siddhi.map.json</groupId>
-                <artifactId>siddhi-map-json</artifactId>
-                <version>${siddhi.map.json.version}</version>
-                <scope>test</scope>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.wso2.extension.siddhi.map.keyvalue/siddhi-map-keyvalue -->
             <dependency>
@@ -172,11 +154,8 @@
     <properties>
         <siddhi.version>4.4.9</siddhi.version>
         <siddhi.version.range>[4.0.0,5.0.0)</siddhi.version.range>
-        <siddhi.map.text.version>1.1.0</siddhi.map.text.version>
         <log4j.version>1.2.17.wso2v1</log4j.version>
         <carbon.transport.version>4.4.15</carbon.transport.version>
-        <siddhi.map.json.version>4.0.15</siddhi.map.json.version>
-        <siddhi.map.xml.version>4.0.11</siddhi.map.xml.version>
         <jacoco.plugin.version>0.7.9</jacoco.plugin.version>
         <carbon.feature.plugin.version>3.0.0</carbon.feature.plugin.version>
     </properties>

@@ -65,7 +65,7 @@ From: 'Atteo' (http://www.atteo.com)
 From: 'Chemouni Uriel' (http://www.minidev.net/)
   - ASM based accessors helper used by json-smart (http://accessors-smart/) net.minidev:accessors-smart:bundle:1.1
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-  - JSON Small and Fast Parser (http://json-smart/) net.minidev:json-smart:bundle:2.1.0
+  - JSON Small and Fast Parser (http://www.minidev.net/) net.minidev:json-smart:bundle:2.2.1
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 From: 'Codehaus' (http://codehaus.org)

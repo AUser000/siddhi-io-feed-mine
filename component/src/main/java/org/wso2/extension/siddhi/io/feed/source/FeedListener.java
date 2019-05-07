@@ -29,6 +29,7 @@ import org.wso2.extension.siddhi.io.feed.utils.EntryUtils;
 import org.wso2.siddhi.core.stream.input.source.SourceEventListener;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class FeedListener implements Runnable {
     private String type;
 
     public FeedListener(SourceEventListener sourceEventListener, URL url,
-                        String type) throws IOException {
+                        String type) {
         this.sourceEventListener = sourceEventListener;
         this.url = url;
         abdera = new Abdera();
@@ -60,18 +61,21 @@ public class FeedListener implements Runnable {
 
     @Override
     public void run() {
+        InputStream inputStream = null;
         try {
             URLConnection urlConnection = url.openConnection();
+            inputStream = urlConnection.getInputStream();
             if (type.equals(Constants.ATOM)) {
-                Document<Feed> doc = abdera.getParser().parse(urlConnection.getInputStream(), url.toString());
+                Document<Feed> doc = abdera.getParser().parse(inputStream, url.toString());
                 Feed feed = doc.getRoot();
                 for (Entry entry : feed.getEntries()) {
                     Map<String, String> map = EntryUtils.entryToMap(entry);
                     waitIfPause();
                     sourceEventListener.onEvent(map, null);
                 }
+                inputStream.close();
             } else if (type.equals(Constants.RSS)) {
-                Document<Feed> doc = abdera.getNewParser().parse(urlConnection.getInputStream(), url.toString());
+                Document<Feed> doc = abdera.getNewParser().parse(inputStream, url.toString());
                 OMElement item = (OMElement) doc.getRoot();
                 Iterator itemValue = item.getFirstElement().getChildrenWithName(Constants.FEED_ITEM);
                 while (itemValue.hasNext()) {
@@ -99,6 +103,14 @@ public class FeedListener implements Runnable {
             }
         } catch (IOException e) {
             log.error(" Connection Error in " + sourceEventListener.getStreamDefinition().getId() + " ", e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    log.info("Error in closing connection ", e);
+                }
+            }
         }
     }
 

@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.wso2.extension.siddhi.io.feed</groupId>
         <artifactId>siddhi-io-feed-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>siddhi-io-feed</artifactId>
@@ -35,21 +35,6 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.extension.siddhi.map.xml</groupId>
-            <artifactId>siddhi-map-xml</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.extension.siddhi.map.json</groupId>
-            <artifactId>siddhi-map-json</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.extension.siddhi.map.text</groupId>
-            <artifactId>siddhi-map-text</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.extension.siddhi.map.keyvalue</groupId>
@@ -148,6 +133,8 @@
                         </Import-Package>
                         <Private-Package>
                             org.apache.abdera.*;
+                            org.apache.commons.httpclient.*;
+                            org.org.apache.ws.commons.axiom:*;
                         </Private-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
                         <Include-Resource>
