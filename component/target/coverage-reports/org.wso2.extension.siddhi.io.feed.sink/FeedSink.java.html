@@ -24,7 +24,6 @@ import org.apache.abdera.model.Entry;
 import org.apache.abdera.protocol.client.AbderaClient;
 import org.apache.abdera.protocol.client.ClientResponse;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.log4j.Logger;
 import org.wso2.extension.siddhi.io.feed.sink.exceptions.FeedErrorResponseException;
 import org.wso2.extension.siddhi.io.feed.utils.BasicAuthProperties;
 import org.wso2.extension.siddhi.io.feed.utils.Constants;
@@ -95,8 +94,7 @@ import java.util.Map;
         }
 )
 
-<span class="fc" id="L98">public class FeedSink extends Sink {</span>
-<span class="fc" id="L99">    private static final Logger log = Logger.getLogger(FeedSink.class);</span>
+<span class="fc" id="L97">public class FeedSink extends Sink {</span>
     private OptionHolder optionHolder;
     private URL url;
     private BasicAuthProperties authProperties;
@@ -108,120 +106,120 @@ import java.util.Map;
 
     @Override
     public Class[] getSupportedInputEventClasses() {
-<span class="fc" id="L111">            return new Class[]{Map.class};</span>
+<span class="fc" id="L109">            return new Class[]{Map.class};</span>
     }
 
     @Override
     public String[] getSupportedDynamicOptions() {
-<span class="fc" id="L116">            return new String[0];</span>
+<span class="fc" id="L114">            return new String[0];</span>
     }
 
     @Override
     protected void init(StreamDefinition streamDefinition, OptionHolder optionHolder, ConfigReader configReader,
             SiddhiAppContext siddhiAppContext) {
-<span class="fc" id="L122">        this.optionHolder = optionHolder;</span>
+<span class="fc" id="L120">        this.optionHolder = optionHolder;</span>
         try {
-<span class="fc" id="L124">            url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));</span>
-<span class="fc" id="L125">        } catch (MalformedURLException e) {</span>
-<span class="fc" id="L126">            throw new SiddhiAppValidationException(&quot;url error&quot;);</span>
-<span class="fc" id="L127">        }</span>
-<span class="fc" id="L128">        authProperties = validateCredentials();</span>
-<span class="fc" id="L129">        this.streamDefinition = streamDefinition;</span>
-<span class="fc" id="L130">        abdera = new Abdera();</span>
-<span class="fc" id="L131">        abderaClient = new AbderaClient(abdera);</span>
-<span class="fc" id="L132">        httpResponse = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.HTTP_RESPONSE_CODE,</span>
+<span class="fc" id="L122">            url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));</span>
+<span class="fc" id="L123">        } catch (MalformedURLException e) {</span>
+<span class="fc" id="L124">            throw new SiddhiAppValidationException(&quot;Url Syntax Error in &quot; + streamDefinition.getId() + &quot; &quot;);</span>
+<span class="fc" id="L125">        }</span>
+<span class="fc" id="L126">        authProperties = validateCredentials();</span>
+<span class="fc" id="L127">        this.streamDefinition = streamDefinition;</span>
+<span class="fc" id="L128">        abdera = new Abdera();</span>
+<span class="fc" id="L129">        abderaClient = new AbderaClient(abdera);</span>
+<span class="fc" id="L130">        httpResponse = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.HTTP_RESPONSE_CODE,</span>
                 Constants.HTTP_CREATED));
-<span class="fc" id="L134">        atomFunc = validateAtomFn(optionHolder.validateAndGetStaticValue(Constants.ATOM_FUNC, Constants.FEED_CREATE));</span>
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (authProperties.isEnable()) {</span>
-<span class="nc" id="L136">            abderaClient.registerTrustManager();</span>
+<span class="fc" id="L132">        atomFunc = validateAtomFn(optionHolder.validateAndGetStaticValue(Constants.ATOM_FUNC, Constants.FEED_CREATE));</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (authProperties.isEnable()) {</span>
+<span class="nc" id="L134">            abderaClient.registerTrustManager();</span>
             try {
-<span class="nc" id="L138">                abderaClient.addCredentials(String.valueOf(url),</span>
-                        &quot;realm&quot;,
-                        &quot;basic&quot;,
-<span class="nc" id="L141">                        new UsernamePasswordCredentials(authProperties.getUserName(), authProperties.getUserPass()));</span>
-<span class="nc" id="L142">            } catch (URISyntaxException e) {</span>
-<span class="nc" id="L143">                log.info(&quot; &quot; , e);</span>
-<span class="nc" id="L144">            }</span>
+<span class="nc" id="L136">                abderaClient.addCredentials(String.valueOf(url), &quot;realm&quot;, &quot;basic&quot;,</span>
+<span class="nc" id="L137">                        new UsernamePasswordCredentials(authProperties.getUserName(), authProperties.getUserPass()));</span>
+<span class="nc" id="L138">            } catch (URISyntaxException e) {</span>
+<span class="nc" id="L139">                throw new SiddhiAppValidationException(&quot;Url Syntax Error in &quot; + streamDefinition.getId() + &quot; &quot;);</span>
+<span class="nc" id="L140">            }</span>
         }
-<span class="fc" id="L146">    }</span>
+<span class="fc" id="L142">    }</span>
 
     private String validateAtomFn(String atomFunc) {
-<span class="fc" id="L149">        atomFunc = atomFunc.toLowerCase(Locale.ENGLISH);</span>
-<span class="pc bpc" id="L150" title="3 of 14 branches missed.">        switch (atomFunc) {</span>
-<span class="fc" id="L151">            case Constants.FEED_CREATE : return atomFunc;</span>
-<span class="fc" id="L152">            case Constants.FEED_DELETE : return atomFunc;</span>
-<span class="fc" id="L153">            case Constants.FEED_UPDATE : return atomFunc;</span>
-<span class="fc" id="L154">            default : throw new SiddhiAppValidationException(&quot; Atom finction validation error  in &quot;</span>
-<span class="fc" id="L155">                    + streamDefinition.getId() + &quot;. Acceptance parameters are 'create', 'delete', 'update'&quot;);</span>
+<span class="fc" id="L145">        atomFunc = atomFunc.toLowerCase(Locale.ENGLISH);</span>
+<span class="pc bpc" id="L146" title="3 of 14 branches missed.">        switch (atomFunc) {</span>
+<span class="fc" id="L147">            case Constants.FEED_CREATE : return atomFunc;</span>
+<span class="fc" id="L148">            case Constants.FEED_DELETE : return atomFunc;</span>
+<span class="fc" id="L149">            case Constants.FEED_UPDATE : return atomFunc;</span>
+<span class="fc" id="L150">            default : throw new SiddhiAppValidationException(&quot; Atom finction validation error  in &quot;</span>
+<span class="fc" id="L151">                    + streamDefinition.getId() + &quot;. Acceptance parameters are 'create', 'delete', 'update'&quot;);</span>
         }
     }
 
     private BasicAuthProperties validateCredentials() {
-<span class="fc" id="L160">        BasicAuthProperties properties = new BasicAuthProperties();</span>
-<span class="fc" id="L161">        if (!optionHolder.validateAndGetStaticValue(</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">                Constants.USERNAME, Constants.CREDENTIALS).equals(Constants.CREDENTIALS) ||</span>
-<span class="fc" id="L163">                !optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS)</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">                        .equals(Constants.CREDENTIALS)) {</span>
-<span class="nc" id="L165">            properties.setEnable(true);</span>
-<span class="nc" id="L166">            properties.setUserName(optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS));</span>
-<span class="nc" id="L167">            properties.setUserPass(optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS));</span>
+<span class="fc" id="L156">        BasicAuthProperties properties = new BasicAuthProperties();</span>
+<span class="fc" id="L157">        if (!optionHolder.validateAndGetStaticValue(</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">                Constants.USERNAME, Constants.CREDENTIALS).equals(Constants.CREDENTIALS) ||</span>
+<span class="fc" id="L159">                !optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS)</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">                        .equals(Constants.CREDENTIALS)) {</span>
+<span class="nc" id="L161">            properties.setEnable(true);</span>
+<span class="nc" id="L162">            properties.setUserName(optionHolder.validateAndGetStaticValue(Constants.USERNAME, Constants.CREDENTIALS));</span>
+<span class="nc" id="L163">            properties.setUserPass(optionHolder.validateAndGetStaticValue(Constants.PASSWORD, Constants.CREDENTIALS));</span>
         }
-<span class="fc" id="L169">        return properties;</span>
+<span class="fc" id="L165">        return properties;</span>
     }
 
 
     @Override
     public void publish(Object payload, DynamicOptions dynamicOptions) throws ConnectionUnavailableException {
-<span class="fc" id="L175">        HashMap map = (HashMap) payload;</span>
-<span class="fc" id="L176">        ClientResponse resp = null;</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (atomFunc.equals(Constants.FEED_CREATE)) {</span>
-<span class="fc" id="L178">            Entry entry = abdera.newEntry();</span>
-<span class="fc" id="L179">            entry = EntryUtils.createEntry(map, entry);</span>
-<span class="fc" id="L180">            entry.setPublished(new Date());</span>
-<span class="fc" id="L181">            resp = abderaClient.post(url.toString() , entry);</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">        } else if (atomFunc.equals(Constants.FEED_DELETE)) {</span>
-<span class="fc" id="L183">            resp = abderaClient.delete((String) map.get(&quot;id&quot;));</span>
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        } else if (atomFunc.equals(Constants.FEED_UPDATE)) {</span>
-<span class="fc" id="L185">            resp = abderaClient.get(url.toString());</span>
-<span class="fc" id="L186">            Document&lt;Entry&gt; doc = resp.getDocument();</span>
-<span class="fc" id="L187">            Entry entry = doc.getRoot();</span>
-<span class="fc" id="L188">            entry =  EntryUtils.createEntry(map, entry);</span>
-<span class="fc" id="L189">            resp = abderaClient.put(url.toString(), entry);</span>
+<span class="fc" id="L171">        HashMap map = (HashMap) payload;</span>
+<span class="fc" id="L172">        ClientResponse resp = null;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        if (atomFunc.equals(Constants.FEED_CREATE)) {</span>
+<span class="fc" id="L174">            Entry entry = abdera.newEntry();</span>
+<span class="fc" id="L175">            entry = EntryUtils.createEntry(map, entry);</span>
+<span class="fc" id="L176">            entry.setPublished(new Date());</span>
+<span class="fc" id="L177">            resp = abderaClient.post(url.toString() , entry);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        } else if (atomFunc.equals(Constants.FEED_DELETE)) {</span>
+<span class="fc" id="L179">            resp = abderaClient.delete((String) map.get(&quot;id&quot;));</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        } else if (atomFunc.equals(Constants.FEED_UPDATE)) {</span>
+<span class="fc" id="L181">            resp = abderaClient.get(url.toString());</span>
+<span class="fc" id="L182">            Document&lt;Entry&gt; doc = resp.getDocument();</span>
+<span class="fc" id="L183">            Entry entry = doc.getRoot();</span>
+<span class="fc" id="L184">            entry =  EntryUtils.createEntry(map, entry);</span>
+<span class="fc" id="L185">            resp = abderaClient.put(url.toString(), entry);</span>
         }
 
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">        if (resp != null) {</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">            if (resp.getStatus() != httpResponse) {</span>
-<span class="nc" id="L194">                throw new FeedErrorResponseException(&quot;Response status conflicts response status code is :&quot; +</span>
-<span class="nc" id="L195">                        resp.getStatus() + &quot;-&quot; + resp.getStatusText());</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">        if (resp != null) {</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">            if (resp.getStatus() != httpResponse) {</span>
+<span class="nc" id="L190">                throw new FeedErrorResponseException(&quot;Response status conflicts response status code is : &quot; +</span>
+<span class="nc" id="L191">                        resp.getStatus() + &quot;-&quot; + resp.getStatusText());</span>
             }
-<span class="fc" id="L197">            resp.release();</span>
+<span class="fc" id="L193">            resp.release();</span>
+        } else {
+<span class="nc" id="L195">            throw new FeedErrorResponseException(&quot;Response is null&quot;);</span>
         }
-<span class="fc" id="L199">    }</span>
+<span class="fc" id="L197">    }</span>
 
     @Override
     public void connect() throws ConnectionUnavailableException {
 
-<span class="fc" id="L204">    }</span>
+<span class="fc" id="L202">    }</span>
 
     @Override
     public void disconnect() {
 
-<span class="fc" id="L209">    }</span>
+<span class="fc" id="L207">    }</span>
 
     @Override
     public void destroy() {
-<span class="fc" id="L213">        abderaClient.clearCredentials();</span>
-<span class="fc" id="L214">    }</span>
+<span class="fc" id="L211">        abderaClient.clearCredentials();</span>
+<span class="fc" id="L212">    }</span>
 
     @Override
     public Map&lt;String, Object&gt; currentState() {
-<span class="nc" id="L218">            return null;</span>
+<span class="nc" id="L216">            return null;</span>
     }
 
     @Override
     public void restoreState(Map&lt;String, Object&gt; map) {
 
-<span class="nc" id="L224">    }</span>
+<span class="nc" id="L222">    }</span>
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -31,7 +31,6 @@ import org.wso2.siddhi.core.stream.input.source.SourceEventListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -39,108 +38,107 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * This is a sample class-level comment, explaining what the extension class does.
+ * This Runnable class consume atom and rss doc types and push entries in to siddhi.
  */
 public class FeedListener implements Runnable {
-<span class="fc" id="L45">    Logger log = Logger.getLogger(FeedSource.class);</span>
-<span class="fc" id="L46">    private boolean paused = false;</span>
-<span class="fc" id="L47">    private ReentrantLock lock = new ReentrantLock();</span>
-<span class="fc" id="L48">    private Condition condition = lock.newCondition();</span>
+<span class="fc" id="L44">    Logger log = Logger.getLogger(FeedSource.class);</span>
+<span class="fc" id="L45">    private boolean paused = false;</span>
+<span class="fc" id="L46">    private ReentrantLock lock = new ReentrantLock();</span>
+<span class="fc" id="L47">    private Condition condition = lock.newCondition();</span>
     private SourceEventListener sourceEventListener;
     private URL url;
     private Abdera abdera;
     private String type;
 
     public FeedListener(SourceEventListener sourceEventListener, URL url,
-<span class="fc" id="L55">                        String type) {</span>
-<span class="fc" id="L56">        this.sourceEventListener = sourceEventListener;</span>
-<span class="fc" id="L57">        this.url = url;</span>
-<span class="fc" id="L58">        abdera = new Abdera();</span>
-<span class="fc" id="L59">        this.type = type;</span>
-<span class="fc" id="L60">    }</span>
+<span class="fc" id="L54">                        String type) {</span>
+<span class="fc" id="L55">        this.sourceEventListener = sourceEventListener;</span>
+<span class="fc" id="L56">        this.url = url;</span>
+<span class="fc" id="L57">        abdera = new Abdera();</span>
+<span class="fc" id="L58">        this.type = type;</span>
+<span class="fc" id="L59">    }</span>
 
     @Override
     public void run() {
-<span class="fc" id="L64">        InputStream inputStream = null;</span>
+<span class="fc" id="L63">        InputStream inputStream = null;</span>
         try {
-<span class="fc" id="L66">            URLConnection urlConnection = url.openConnection();</span>
-<span class="fc" id="L67">            inputStream = urlConnection.getInputStream();</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">            if (type.equals(Constants.ATOM)) {</span>
-<span class="fc" id="L69">                Document&lt;Feed&gt; doc = abdera.getParser().parse(inputStream, url.toString());</span>
-<span class="fc" id="L70">                Feed feed = doc.getRoot();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">                for (Entry entry : feed.getEntries()) {</span>
-<span class="fc" id="L72">                    Map&lt;String, String&gt; map = EntryUtils.entryToMap(entry);</span>
-<span class="fc" id="L73">                    waitIfPause();</span>
-<span class="fc" id="L74">                    sourceEventListener.onEvent(map, null);</span>
-<span class="fc" id="L75">                }</span>
-<span class="fc" id="L76">                inputStream.close();</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">            } else if (type.equals(Constants.RSS)) {</span>
-<span class="fc" id="L78">                Document&lt;Feed&gt; doc = abdera.getNewParser().parse(inputStream, url.toString());</span>
-<span class="fc" id="L79">                OMElement item = (OMElement) doc.getRoot();</span>
-<span class="fc" id="L80">                Iterator itemValue = item.getFirstElement().getChildrenWithName(Constants.FEED_ITEM);</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">                while (itemValue.hasNext()) {</span>
-<span class="fc" id="L82">                    Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L83">                    OMElement omElement = (OMElement) itemValue.next();</span>
+<span class="fc" id="L65">            inputStream = url.openStream();</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (type.equals(Constants.ATOM)) {</span>
+<span class="fc" id="L67">                Document&lt;Feed&gt; doc = abdera.getParser().parse(inputStream, url.toString());</span>
+<span class="fc" id="L68">                Feed feed = doc.getRoot();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                for (Entry entry : feed.getEntries()) {</span>
+<span class="fc" id="L70">                    Map&lt;String, String&gt; map = EntryUtils.entryToMap(entry);</span>
+<span class="fc" id="L71">                    waitIfPause();</span>
+<span class="fc" id="L72">                    sourceEventListener.onEvent(map, null);</span>
+<span class="fc" id="L73">                }</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            } else if (type.equals(Constants.RSS)) {</span>
+<span class="fc" id="L75">                Document&lt;Feed&gt; doc = abdera.getParser().parse(url.openStream(), url.toString());</span>
+<span class="fc" id="L76">                OMElement item = (OMElement) doc.getRoot();</span>
+<span class="fc" id="L77">                Iterator itemValue = item.getFirstElement().getChildrenWithName(Constants.FEED_ITEM);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                while (itemValue.hasNext()) {</span>
+<span class="fc" id="L79">                    Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L80">                    OMElement omElement = (OMElement) itemValue.next();</span>
 
-<span class="fc" id="L85">                    Iterator titleValue = omElement.getChildrenWithName(Constants.FEED_TITLE);</span>
-<span class="fc" id="L86">                    OMElement title = (OMElement) titleValue.next();</span>
-<span class="fc" id="L87">                    map.put(Constants.TITLE, title.getText());</span>
+<span class="fc" id="L82">                    Iterator titleValue = omElement.getChildrenWithName(Constants.FEED_TITLE);</span>
+<span class="fc" id="L83">                    OMElement title = (OMElement) titleValue.next();</span>
+<span class="fc" id="L84">                    map.put(Constants.TITLE, title.getText());</span>
 
-<span class="fc" id="L89">                    Iterator dateValue = omElement.getChildrenWithName(Constants.FEED_PUBDATE);</span>
-<span class="fc" id="L90">                    OMElement pubdate = (OMElement) dateValue.next();</span>
-<span class="fc" id="L91">                    map.put(Constants.PUBDATE, pubdate.getText());</span>
+<span class="fc" id="L86">                    Iterator dateValue = omElement.getChildrenWithName(Constants.FEED_PUBDATE);</span>
+<span class="fc" id="L87">                    OMElement pubdate = (OMElement) dateValue.next();</span>
+<span class="fc" id="L88">                    map.put(Constants.PUBDATE, pubdate.getText());</span>
 
-<span class="fc" id="L93">                    Iterator idValue = omElement.getChildrenWithName(Constants.FEED_GUID);</span>
-<span class="fc" id="L94">                    OMElement guid = (OMElement) idValue.next();</span>
-<span class="fc" id="L95">                    map.put(Constants.ID, guid.getText());</span>
+<span class="fc" id="L90">                    Iterator idValue = omElement.getChildrenWithName(Constants.FEED_GUID);</span>
+<span class="fc" id="L91">                    OMElement guid = (OMElement) idValue.next();</span>
+<span class="fc" id="L92">                    map.put(Constants.ID, guid.getText());</span>
 
-<span class="fc" id="L97">                    Iterator linkValue = omElement.getChildrenWithName(Constants.FEED_LINK);</span>
-<span class="fc" id="L98">                    OMElement link = (OMElement) linkValue.next();</span>
-<span class="fc" id="L99">                    map.put(Constants.LINK, link.getText());</span>
-<span class="fc" id="L100">                    waitIfPause();</span>
-<span class="fc" id="L101">                    sourceEventListener.onEvent(map, null);</span>
-<span class="fc" id="L102">                }</span>
+<span class="fc" id="L94">                    Iterator linkValue = omElement.getChildrenWithName(Constants.FEED_LINK);</span>
+<span class="fc" id="L95">                    OMElement link = (OMElement) linkValue.next();</span>
+<span class="fc" id="L96">                    map.put(Constants.LINK, link.getText());</span>
+<span class="fc" id="L97">                    waitIfPause();</span>
+<span class="fc" id="L98">                    sourceEventListener.onEvent(map, null);</span>
+<span class="fc" id="L99">                }</span>
             }
-<span class="nc" id="L104">        } catch (IOException e) {</span>
-<span class="nc" id="L105">            log.error(&quot; Connection Error in &quot; + sourceEventListener.getStreamDefinition().getId() + &quot; &quot;, e);</span>
+<span class="nc" id="L101">        } catch (IOException e) {</span>
+<span class="nc" id="L102">            log.error(&quot; Connection Error in &quot; + sourceEventListener.getStreamDefinition().getId() + &quot; &quot;, e);</span>
         } finally {
-<span class="pc bpc" id="L107" title="5 of 6 branches missed.">            if (inputStream != null) {</span>
+<span class="pc bpc" id="L104" title="5 of 6 branches missed.">            if (inputStream != null) {</span>
                 try {
-<span class="pc" id="L109">                    inputStream.close();</span>
-<span class="nc" id="L110">                } catch (IOException e) {</span>
-<span class="nc" id="L111">                    log.info(&quot;Error in closing connection &quot;, e);</span>
-<span class="pc" id="L112">                }</span>
+<span class="pc" id="L106">                    inputStream.close();</span>
+<span class="nc" id="L107">                } catch (IOException e) {</span>
+<span class="nc" id="L108">                    log.error(&quot;Error in closing connection &quot;, e);</span>
+<span class="pc" id="L109">                }</span>
             }
-<span class="nc" id="L114">        }</span>
-<span class="fc" id="L115">    }</span>
+<span class="nc" id="L111">        }</span>
+<span class="fc" id="L112">    }</span>
 
     public void pause() {
-<span class="fc" id="L118">        paused = true;</span>
-<span class="fc" id="L119">    }</span>
+<span class="fc" id="L115">        paused = true;</span>
+<span class="fc" id="L116">    }</span>
 
     public void resume() {
-<span class="fc" id="L122">        paused = false;</span>
+<span class="fc" id="L119">        paused = false;</span>
         try {
-<span class="fc" id="L124">            lock.lock();</span>
-<span class="fc" id="L125">            condition.signalAll();</span>
+<span class="fc" id="L121">            lock.lock();</span>
+<span class="fc" id="L122">            condition.signalAll();</span>
         } finally {
-<span class="pc" id="L127">            lock.unlock();</span>
-<span class="pc" id="L128">        }</span>
-<span class="fc" id="L129">    }</span>
+<span class="pc" id="L124">            lock.unlock();</span>
+<span class="pc" id="L125">        }</span>
+<span class="fc" id="L126">    }</span>
 
     private void waitIfPause() {
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if (paused) {</span>
-<span class="nc" id="L133">            lock.lock();</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (paused) {</span>
+<span class="nc" id="L130">            lock.lock();</span>
             try {
-<span class="nc bnc" id="L135" title="All 2 branches missed.">                while (paused) {</span>
-<span class="nc" id="L136">                    condition.await();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">                while (paused) {</span>
+<span class="nc" id="L133">                    condition.await();</span>
                 }
-<span class="nc" id="L138">            } catch (InterruptedException ie) {</span>
-<span class="nc" id="L139">                Thread.currentThread().interrupt();</span>
+<span class="nc" id="L135">            } catch (InterruptedException ie) {</span>
+<span class="nc" id="L136">                Thread.currentThread().interrupt();</span>
             } finally {
-<span class="nc" id="L141">                lock.unlock();</span>
-<span class="nc" id="L142">            }</span>
+<span class="nc" id="L138">                lock.unlock();</span>
+<span class="nc" id="L139">            }</span>
         }
-<span class="fc" id="L144">    }</span>
+<span class="fc" id="L141">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

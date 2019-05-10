@@ -48,16 +48,16 @@ public class Constants {
 
     public static final String ID = "id";
     public static final String ITEM = "item";
-    public static final String CHANNEL = "channel";
+    //public static final String CHANNEL = "channel";
     public static final String TITLE = "title";
     public static final String GUID = "guid";
     public static final String PUBDATE = "pubDate";
-    public static final String UPDATED = "updated";
+    //public static final String UPDATED = "updated";
     public static final String LINK = "link";
 
 
-    public static final QName FEED_RSS = new QName(RSS);
-    public static final QName FEED_CHANNEL = new QName(CHANNEL);
+    //public static final QName FEED_RSS = new QName(RSS);
+    //public static final QName FEED_CHANNEL = new QName(CHANNEL);
     public static final QName FEED_ITEM = new QName(ITEM);
     public static final QName FEED_TITLE = new QName(TITLE);
     public static final QName FEED_GUID = new QName(GUID);

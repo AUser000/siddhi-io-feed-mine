@@ -31,7 +31,6 @@ import org.wso2.siddhi.core.stream.input.source.SourceEventListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -39,7 +38,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * This is a sample class-level comment, explaining what the extension class does.
+ * This Runnable class consume atom and rss doc types and push entries in to siddhi.
  */
 public class FeedListener implements Runnable {
     Logger log = Logger.getLogger(FeedSource.class);
@@ -63,8 +62,7 @@ public class FeedListener implements Runnable {
     public void run() {
         InputStream inputStream = null;
         try {
-            URLConnection urlConnection = url.openConnection();
-            inputStream = urlConnection.getInputStream();
+            inputStream = url.openStream();
             if (type.equals(Constants.ATOM)) {
                 Document<Feed> doc = abdera.getParser().parse(inputStream, url.toString());
                 Feed feed = doc.getRoot();
@@ -73,9 +71,8 @@ public class FeedListener implements Runnable {
                     waitIfPause();
                     sourceEventListener.onEvent(map, null);
                 }
-                inputStream.close();
             } else if (type.equals(Constants.RSS)) {
-                Document<Feed> doc = abdera.getNewParser().parse(inputStream, url.toString());
+                Document<Feed> doc = abdera.getParser().parse(url.openStream(), url.toString());
                 OMElement item = (OMElement) doc.getRoot();
                 Iterator itemValue = item.getFirstElement().getChildrenWithName(Constants.FEED_ITEM);
                 while (itemValue.hasNext()) {
@@ -108,7 +105,7 @@ public class FeedListener implements Runnable {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    log.info("Error in closing connection ", e);
+                    log.error("Error in closing connection ", e);
                 }
             }
         }
@@ -142,4 +139,5 @@ public class FeedListener implements Runnable {
             }
         }
     }
+
 }

@@ -213,5 +213,34 @@ public class TestCaseOfFeedSource {
         });
 
     }
+
+
+    @Test(expectedExceptions = SiddhiAppValidationException.class)
+    public void sinkForValidation3() throws InterruptedException {
+
+        log.info("-------------------------------------------------------------------------------------");
+        log.info("                  Feed Source For Request Interval Validation Test                   ");
+        log.info("-------------------------------------------------------------------------------------");
+
+        SiddhiManager siddhiManager = new SiddhiManager();
+
+        String siddhiApp = "@App:name('test') \n" +
+
+                "@Source(type='feed', \n" +
+                "feed.type = 'Atom', \n" +
+                "request.interval = 'A', \n" +
+                "url = 'http://feeds.bbci.co.uk/news/rss.xml', \n" +
+                "@map(type = 'keyvalue', fail.on.missing.attribute = 'false')) \n" +
+                " define stream outputStream(id string, published string, content string, title string);\n";
+
+        SiddhiAppRuntime executionPlanRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
+        executionPlanRuntime.addCallback("outputStream", new StreamCallback() {
+            @Override
+            public void receive(Event[] events) {
+                EventPrinter.print(events);
+            }
+        });
+
+    }
 }
 

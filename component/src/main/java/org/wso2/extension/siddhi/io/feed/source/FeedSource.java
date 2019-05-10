@@ -18,7 +18,6 @@
 
 package org.wso2.extension.siddhi.io.feed.source;
 
-import org.apache.log4j.Logger;
 import org.wso2.extension.siddhi.io.feed.utils.Constants;
 import org.wso2.siddhi.annotation.Example;
 import org.wso2.siddhi.annotation.Extension;
@@ -78,12 +77,10 @@ import java.util.concurrent.TimeUnit;
 )
 
 public class FeedSource extends Source {
-    Logger logger = Logger.getLogger(FeedSource.class);
     OptionHolder optionHolder;
     private URL url;
     private String type;
     private int requestInterval;
-    private String streamName;
     private FeedListener listener;
     private ScheduledFuture future;
     private SourceEventListener sourceEventListener;

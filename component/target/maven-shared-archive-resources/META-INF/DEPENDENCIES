@@ -115,13 +115,13 @@ From: 'The Apache Software Foundation' (http://www.apache.org/)
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 From: 'WSO2' (http://www.wso2.org/)
-  - Siddhi Annotations (http://www.wso2.org/siddhi/modules/siddhi-annotations/) org.wso2.siddhi:siddhi-annotations:bundle:4.4.9
+  - Siddhi Annotations (http://www.wso2.org/siddhi/modules/siddhi-annotations/) org.wso2.siddhi:siddhi-annotations:bundle:4.5.5
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-  - Siddhi Core (http://www.wso2.org/siddhi/modules/siddhi-core/) org.wso2.siddhi:siddhi-core:bundle:4.4.9
+  - Siddhi Core (http://www.wso2.org/siddhi/modules/siddhi-core/) org.wso2.siddhi:siddhi-core:bundle:4.5.5
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-  - Siddhi Query API (http://www.wso2.org/siddhi/modules/siddhi-query-api/) org.wso2.siddhi:siddhi-query-api:bundle:4.4.9
+  - Siddhi Query API (http://www.wso2.org/siddhi/modules/siddhi-query-api/) org.wso2.siddhi:siddhi-query-api:bundle:4.5.5
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-  - Siddhi Query Compiler (http://www.wso2.org/siddhi/modules/siddhi-query-compiler/) org.wso2.siddhi:siddhi-query-compiler:bundle:4.4.9
+  - Siddhi Query Compiler (http://www.wso2.org/siddhi/modules/siddhi-query-compiler/) org.wso2.siddhi:siddhi-query-compiler:bundle:4.5.5
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 

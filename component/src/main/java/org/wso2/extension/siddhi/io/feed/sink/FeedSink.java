@@ -24,7 +24,6 @@ import org.apache.abdera.model.Entry;
 import org.apache.abdera.protocol.client.AbderaClient;
 import org.apache.abdera.protocol.client.ClientResponse;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.log4j.Logger;
 import org.wso2.extension.siddhi.io.feed.sink.exceptions.FeedErrorResponseException;
 import org.wso2.extension.siddhi.io.feed.utils.BasicAuthProperties;
 import org.wso2.extension.siddhi.io.feed.utils.Constants;
@@ -96,7 +95,6 @@ import java.util.Map;
 )
 
 public class FeedSink extends Sink {
-    private static final Logger log = Logger.getLogger(FeedSink.class);
     private OptionHolder optionHolder;
     private URL url;
     private BasicAuthProperties authProperties;
@@ -123,7 +121,7 @@ public class FeedSink extends Sink {
         try {
             url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));
         } catch (MalformedURLException e) {
-            throw new SiddhiAppValidationException("url error");
+            throw new SiddhiAppValidationException("Url Syntax Error in " + streamDefinition.getId() + " ");
         }
         authProperties = validateCredentials();
         this.streamDefinition = streamDefinition;
@@ -135,12 +133,10 @@ public class FeedSink extends Sink {
         if (authProperties.isEnable()) {
             abderaClient.registerTrustManager();
             try {
-                abderaClient.addCredentials(String.valueOf(url),
-                        "realm",
-                        "basic",
+                abderaClient.addCredentials(String.valueOf(url), "realm", "basic",
                         new UsernamePasswordCredentials(authProperties.getUserName(), authProperties.getUserPass()));
             } catch (URISyntaxException e) {
-                log.info(" " , e);
+                throw new SiddhiAppValidationException("Url Syntax Error in " + streamDefinition.getId() + " ");
             }
         }
     }
@@ -191,10 +187,12 @@ public class FeedSink extends Sink {
 
         if (resp != null) {
             if (resp.getStatus() != httpResponse) {
-                throw new FeedErrorResponseException("Response status conflicts response status code is :" +
+                throw new FeedErrorResponseException("Response status conflicts response status code is : " +
                         resp.getStatus() + "-" + resp.getStatusText());
             }
             resp.release();
+        } else {
+            throw new FeedErrorResponseException("Response is null");
         }
     }
 

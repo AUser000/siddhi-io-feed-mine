@@ -18,7 +18,6 @@
 
 package org.wso2.extension.siddhi.io.feed.source;
 
-import org.apache.log4j.Logger;
 import org.wso2.extension.siddhi.io.feed.utils.Constants;
 import org.wso2.siddhi.annotation.Example;
 import org.wso2.siddhi.annotation.Extension;
@@ -77,13 +76,11 @@ import java.util.concurrent.TimeUnit;
         }
 )
 
-<span class="fc" id="L80">public class FeedSource extends Source {</span>
-<span class="fc" id="L81">    Logger logger = Logger.getLogger(FeedSource.class);</span>
+<span class="fc" id="L79">public class FeedSource extends Source {</span>
     OptionHolder optionHolder;
     private URL url;
     private String type;
     private int requestInterval;
-    private String streamName;
     private FeedListener listener;
     private ScheduledFuture future;
     private SourceEventListener sourceEventListener;
@@ -94,44 +91,44 @@ import java.util.concurrent.TimeUnit;
                      String[] requestedTransportPropertyNames, ConfigReader configReader,
                      SiddhiAppContext siddhiAppContext) {
 
-<span class="fc" id="L97">        this.optionHolder = optionHolder;</span>
-<span class="fc" id="L98">        this.sourceEventListener = sourceEventListener;</span>
+<span class="fc" id="L94">        this.optionHolder = optionHolder;</span>
+<span class="fc" id="L95">        this.sourceEventListener = sourceEventListener;</span>
         try {
-<span class="fc" id="L100">            url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));</span>
-<span class="nc" id="L101">        } catch (MalformedURLException e) {</span>
-<span class="nc" id="L102">            throw new SiddhiAppValidationException(&quot; Url format Error in siddhi stream &quot; +</span>
-<span class="nc" id="L103">                    sourceEventListener.getStreamDefinition().getId());</span>
-<span class="fc" id="L104">        }</span>
-<span class="fc" id="L105">        this.type = validateType();</span>
-<span class="fc" id="L106">        this.requestInterval = validateRequestInterval();</span>
-<span class="fc" id="L107">        this.scheduledExecutorService = siddhiAppContext.getScheduledExecutorService();</span>
-<span class="fc" id="L108">    }</span>
+<span class="fc" id="L97">            url = new URL(this.optionHolder.validateAndGetStaticValue(Constants.URL));</span>
+<span class="nc" id="L98">        } catch (MalformedURLException e) {</span>
+<span class="nc" id="L99">            throw new SiddhiAppValidationException(&quot; Url format Error in siddhi stream &quot; +</span>
+<span class="nc" id="L100">                    sourceEventListener.getStreamDefinition().getId());</span>
+<span class="fc" id="L101">        }</span>
+<span class="fc" id="L102">        this.type = validateType();</span>
+<span class="fc" id="L103">        this.requestInterval = validateRequestInterval();</span>
+<span class="fc" id="L104">        this.scheduledExecutorService = siddhiAppContext.getScheduledExecutorService();</span>
+<span class="fc" id="L105">    }</span>
 
     private String validateType() {
-<span class="fc" id="L111">        String type = optionHolder.validateAndGetStaticValue(Constants.FEED_TYPE);</span>
-<span class="fc" id="L112">        type = type.toLowerCase(Locale.ENGLISH);</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (type.equals(Constants.RSS)) {</span>
-<span class="fc" id="L114">            return type;</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        } else if (type.equals(Constants.ATOM)) {</span>
-<span class="fc" id="L116">            return type;</span>
+<span class="fc" id="L108">        String type = optionHolder.validateAndGetStaticValue(Constants.FEED_TYPE);</span>
+<span class="fc" id="L109">        type = type.toLowerCase(Locale.ENGLISH);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (type.equals(Constants.RSS)) {</span>
+<span class="fc" id="L111">            return type;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        } else if (type.equals(Constants.ATOM)) {</span>
+<span class="fc" id="L113">            return type;</span>
         } else {
-<span class="fc" id="L118">            throw new SiddhiAppValidationException(&quot;Feed Type Validation error in &quot;</span>
-<span class="fc" id="L119">                    + sourceEventListener.getStreamDefinition().getId() + &quot; Acceptance parameters are RSS &amp; Atom&quot;);</span>
+<span class="fc" id="L115">            throw new SiddhiAppValidationException(&quot;Feed Type Validation error in &quot;</span>
+<span class="fc" id="L116">                    + sourceEventListener.getStreamDefinition().getId() + &quot; Acceptance parameters are RSS &amp; Atom&quot;);</span>
         }
     }
 
     private int validateRequestInterval() {
         try {
-<span class="fc" id="L125">            int requestInterval = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.REQUEST_INTERVAL,</span>
+<span class="fc" id="L122">            int requestInterval = Integer.parseInt(optionHolder.validateAndGetStaticValue(Constants.REQUEST_INTERVAL,</span>
                     Constants.DEFAULT_REQUEST_INTERVAL));
-<span class="fc bfc" id="L127" title="All 2 branches covered.">            if (requestInterval &gt; 0) {</span>
-<span class="fc" id="L128">                return requestInterval;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            if (requestInterval &gt; 0) {</span>
+<span class="fc" id="L125">                return requestInterval;</span>
             } else {
-<span class="fc" id="L130">                throw new SiddhiAppValidationException(&quot; Error in &quot; + sourceEventListener.getStreamDefinition().getId()</span>
+<span class="fc" id="L127">                throw new SiddhiAppValidationException(&quot; Error in &quot; + sourceEventListener.getStreamDefinition().getId()</span>
                         + &quot; validating request interval, Request interval accept only positive integers &quot;);
             }
-<span class="nc" id="L133">        } catch (NumberFormatException e) {</span>
-<span class="nc" id="L134">            throw new SiddhiAppValidationException(&quot; Error in &quot; + sourceEventListener.getStreamDefinition().getId()</span>
+<span class="fc" id="L130">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L131">            throw new SiddhiAppValidationException(&quot; Error in &quot; + sourceEventListener.getStreamDefinition().getId()</span>
                     + &quot; validating request interval, Request interval accept only positive integers &quot;);
         }
     }
@@ -139,49 +136,49 @@ import java.util.concurrent.TimeUnit;
 
     @Override
     public Class[] getOutputEventClasses() {
-<span class="fc" id="L142">        return new Class[] {Map.class};</span>
+<span class="fc" id="L139">        return new Class[] {Map.class};</span>
     }
 
     @Override
     public void connect(ConnectionCallback connectionCallback) throws ConnectionUnavailableException {
-<span class="fc" id="L147">        listener = new FeedListener(sourceEventListener, url, type);</span>
-<span class="fc" id="L148">        future = scheduledExecutorService.scheduleAtFixedRate(listener, 0, requestInterval, TimeUnit.MINUTES);</span>
-<span class="fc" id="L149">    }</span>
+<span class="fc" id="L144">        listener = new FeedListener(sourceEventListener, url, type);</span>
+<span class="fc" id="L145">        future = scheduledExecutorService.scheduleAtFixedRate(listener, 0, requestInterval, TimeUnit.MINUTES);</span>
+<span class="fc" id="L146">    }</span>
 
     @Override
     public void disconnect() {
 
-<span class="fc" id="L154">    }</span>
+<span class="fc" id="L151">    }</span>
 
     @Override
     public void destroy() {
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if (future != null) {</span>
-<span class="fc" id="L159">            future.cancel(true);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        if (future != null) {</span>
+<span class="fc" id="L156">            future.cancel(true);</span>
         }
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (scheduledExecutorService != null) {</span>
-<span class="fc" id="L162">            scheduledExecutorService.shutdown();</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if (scheduledExecutorService != null) {</span>
+<span class="fc" id="L159">            scheduledExecutorService.shutdown();</span>
         }
-<span class="fc" id="L164">    }</span>
+<span class="fc" id="L161">    }</span>
 
     @Override
     public void pause() {
-<span class="fc" id="L168">        listener.pause();</span>
-<span class="fc" id="L169">    }</span>
+<span class="fc" id="L165">        listener.pause();</span>
+<span class="fc" id="L166">    }</span>
 
     @Override
     public void resume() {
-<span class="fc" id="L173">        listener.resume();</span>
-<span class="fc" id="L174">    }</span>
+<span class="fc" id="L170">        listener.resume();</span>
+<span class="fc" id="L171">    }</span>
 
     @Override
     public Map&lt;String, Object&gt; currentState() {
-<span class="nc" id="L178">        return null;</span>
+<span class="nc" id="L175">        return null;</span>
     }
 
     @Override
     public void restoreState(Map&lt;String, Object&gt; map) {
 
-<span class="nc" id="L184">    }</span>
+<span class="nc" id="L181">    }</span>
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

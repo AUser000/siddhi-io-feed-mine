@@ -23,10 +23,6 @@ package org.wso2.extension.siddhi.io.feed.sink.exceptions;
  */
 public class FeedErrorResponseException extends RuntimeException {
 
-    public FeedErrorResponseException() {
-        super();
-    }
-
     public FeedErrorResponseException(String message) {
         super(message);
     }

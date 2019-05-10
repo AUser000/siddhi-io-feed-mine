@@ -8,6 +8,7 @@ org/wso2/extension/siddhi/io/feed/sink/TestCaseOfFeedSink.class
 org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$5.class
 org/wso2/extension/siddhi/io/feed/utils/JettyServer$1.class
 org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource.class
+org/wso2/extension/siddhi/io/feed/source/TestCaseOfFeedSource$6.class
 org/wso2/extension/siddhi/io/feed/utils/NewsAdapter.class
 org/wso2/extension/siddhi/io/feed/utils/PortAllocator.class
 org/wso2/extension/siddhi/io/feed/sink/TestCaseOfFeedSink$5.class
